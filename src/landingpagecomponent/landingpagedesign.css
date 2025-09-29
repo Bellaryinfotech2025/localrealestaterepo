@@ -41,6 +41,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 1000;
+ 
 }
 
 .lre_eagle_localrealstate__brand {
@@ -113,6 +114,7 @@ body {
   justify-content: center;
   position: relative;
   margin-top: 72px;
+  height: 70vh;
 }
 
 .lre_tiger_localrealstate::before {

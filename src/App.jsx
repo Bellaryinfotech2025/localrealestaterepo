@@ -46,6 +46,7 @@ element={
           path="/localrealestate"
           element={
             <>
+            <LandingPage/>
 
              <Lrecustomerselection/>
                
