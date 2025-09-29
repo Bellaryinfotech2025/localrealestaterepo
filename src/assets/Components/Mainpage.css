@@ -1,0 +1,375 @@
+/* ---------------- Whole page wrapper ---------------- */
+.main-wrapper {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ---------------- Hero section ---------------- */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    background: url("https://images.unsplash.com/photo-1501183638710-841dd1904471") no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.hero-overlay {
+    background: rgba(0, 0, 0, 0.55);
+    padding: 30px 50px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+/* ---------------- Tabs container (desktop) ---------------- */
+.tabs-container {
+    display: flex;
+    gap: 25px;
+    background: #ffffff;
+    padding: 15px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    margin-top: -40px;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+/* Tab button */
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    background: #1d976c;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(29, 151, 108, 0.3);
+}
+
+/* Dropdown menu */
+.tab-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    min-width: 160px;
+    z-index: 99;
+    padding: 10px 0;
+}
+
+/* Show dropdown on hover (desktop) */
+.tab-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Dropdown items */
+.dropdown-item {
+    padding: 10px 20px;
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: #1d976c;
+    color: #fff;
+}
+
+/* ---------------- Hamburger button ---------------- */
+.menu-toggle {
+    display: none;
+    position: relative;
+    width: 35px;
+    height: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 101;
+    margin-top: -30px;
+    margin-bottom: 15px;
+}
+
+.menu-toggle span {
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: #1d976c;
+    border-radius: 2px;
+    left: 0;
+    transition: all 0.4s ease;
+}
+
+/* Bars positioning */
+.menu-toggle span:nth-child(1) {
+    top: 0;
+}
+
+.menu-toggle span:nth-child(2) {
+    top: 10px;
+}
+
+.menu-toggle span:nth-child(3) {
+    top: 20px;
+}
+
+/* Animate hamburger → X */
+.menu-toggle.open span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 10px;
+}
+
+.menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 10px;
+}
+
+/* ---------------- Dark overlay ---------------- */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ---------------- Mobile responsive ---------------- */
+@media (max-width: 768px) {
+
+    /* Drawer tabs container */
+    .tabs-container {
+        flex-direction: column;
+        gap: 10px;
+        width: 80%;
+        position: fixed;
+        top: -100%;
+        /* start above screen */
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ffffff;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        z-index: 100;
+        max-height: 90vh;
+        overflow-y: auto;
+        transition: top 0.4s ease;
+    }
+
+    /* Drawer open */
+    .tabs-container.open {
+        top: 80px;
+        /* slides below hamburger */
+    }
+
+    /* Hamburger visible on mobile */
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+    }
+
+    /* Static dropdowns in drawer */
+    .tab-dropdown {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: relative;
+        top: auto;
+        left: auto;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        background: #f9f9f9;
+        margin-top: 5px;
+        padding: 5px 0;
+        border-radius: 6px;
+    }
+
+    .dropdown-item {
+        padding: 8px 15px;
+    }
+}
+
+.footer {
+    background-color: #e6f4ea;
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 2px solid #a5d6a7;
+    margin-top: auto;
+}
+
+.footer-content h3 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.footer-content p {
+    color: #4e944f;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.footer-images {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.footer-images img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Chatbot styles */
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+}
+
+.chatbot-toggle {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.chatbot-toggle:hover {
+    background-color: #388e3c;
+}
+
+.chatbot-window {
+    width: 300px;
+    height: 400px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chatbot-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chatbot-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f9f9f9;
+}
+
+.chat-message {
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    font-size: 14px;
+}
+
+.chat-message.bot {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+}
+
+.chat-message.user {
+    background-color: #DCF8C6;
+    align-self: flex-end;
+}
+
+.chatbot-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+.chatbot-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+}
+
+.chatbot-input button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}

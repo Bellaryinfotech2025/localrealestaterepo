@@ -1,0 +1,36 @@
+/* Layout container for sidebars + content */
+.page-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebars shared styles */
+.sidebar {
+    width: 220px;
+    background-color: #f5f5f5;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.left-sidebar {
+    border-right: 1px solid #ccc;
+}
+
+.right-sidebar {
+    border-left: 1px solid #ccc;
+}
+
+/* Main content should grow */
+.main-wrapper {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Image styling in left sidebar */
+.left-sidebar img {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

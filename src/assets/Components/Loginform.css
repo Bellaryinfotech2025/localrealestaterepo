@@ -1,0 +1,238 @@
+/* Background Gradient Animation */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Particle Float Animation */
+@keyframes float {
+    0% {
+        transform: translateY(100vh) scale(var(--size));
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    80% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(-10vh) scale(var(--size));
+        opacity: 0;
+    }
+}
+
+/* Container */
+.premium-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    /* Background Image + Gradient Overlay */
+    background-image: url('../assets/login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    background-color: rgba(14, 165, 233, 0.3);
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden;
+}
+
+/* Particles */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: calc(4px + 6 * var(--size, 1));
+    height: calc(4px + 6 * var(--size, 1));
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.3);
+    animation: float linear infinite;
+}
+
+/* Form */
+.premium-form {
+    position: relative;
+    z-index: 3;
+    background: #ffffffdd;
+    width: 400px;
+    max-width: 95%;
+    padding: 3rem 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+/* Title & Subtitle */
+.title {
+    font-size: 2rem;
+    color: #0f172a;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 8px #0ea5e9;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-bottom: 1.5rem;
+}
+
+/* Error */
+.error {
+    color: #b91c1c;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Inputs */
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 0.7rem;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+    background: #ffffff20;
+    color: #0f172a;
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.2);
+}
+
+.input-group input:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.6);
+    backdrop-filter: blur(5px);
+}
+
+.input-group label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: 0.2s all;
+}
+
+.input-group.active label,
+.input-group input:focus+label {
+    top: -0.5rem;
+    font-size: 0.75rem;
+    color: #0ea5e9;
+    background: #ffffffdd;
+    padding: 0 0.2rem;
+}
+
+/* Toggle Password */
+.toggle-password {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Forgot Password */
+.forgot {
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.forgot a {
+    color: #0ea5e9;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.forgot a:hover {
+    text-decoration: underline;
+}
+
+/* Button */
+.premium-submit {
+    width: 100%;
+    padding: 0.85rem;
+    border: none;
+    border-radius: 0.7rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+    color: #ffffff;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 10px #22d3ee, 0 0 20px #0ea5e9;
+}
+
+.premium-submit:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(90deg, #22d3ee, #0ea5e9);
+    box-shadow: 0 0 15px #22d3ee, 0 0 25px #0ea5e9;
+}
+
+/* Signup */
+.signup {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.signup a {
+    color: #0ea5e9;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media screen and (max-width: 420px) {
+    .premium-form {
+        width: 90%;
+        padding: 2.5rem 1.5rem;
+    }
+
+    .title {
+        font-size: 1.7rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+    }
+}
