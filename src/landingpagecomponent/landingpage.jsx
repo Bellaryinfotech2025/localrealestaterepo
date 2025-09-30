@@ -1,27 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../landingpagecomponent/landingpagedesign.css';
 import { Link } from 'react-router-dom';
+
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [location, setLocation] = useState('');
-  const [propertyType, setPropertyType] = useState('all');
   const sections = {
     home: useRef(null),
     about: useRef(null),
     listings: useRef(null),
     why: useRef(null),
-    testimonials: useRef(null),
     contact: useRef(null),
   };
 
   const scrollToSection = (sectionKey) => {
     sections[sectionKey].current?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
-  };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log({ location, propertyType });
   };
 
   // Close mobile menu when resizing to desktop
@@ -52,14 +45,17 @@ const LandingPage = () => {
           <button onClick={() => scrollToSection('about')} className="lre_eagle_localrealstate__link">About</button>
           <button onClick={() => scrollToSection('listings')} className="lre_eagle_localrealstate__link">Listings</button>
           <button onClick={() => scrollToSection('why')} className="lre_eagle_localrealstate__link">Why Choose Us</button>
-          <button onClick={() => scrollToSection('testimonials')} className="lre_eagle_localrealstate__link">Testimonials</button>
           <button onClick={() => scrollToSection('contact')} className="lre_eagle_localrealstate__link">Contact</button>
           
           <Link to="/login" className="lre_eagle_localrealstate__login" style={{textDecoration:'none'}}>Login</Link>
-        
-          <Link to="/register">
-          <button className="lre_eagle_localrealstate__signup">Sign Up</button>
-          </Link>
+          <a 
+            href="https://wa.me/919876543210?text=👋%20Hello%20there%21%20%F0%9F%98%89%20I%20need%20help%20with%20real%20estate%20services." 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="lre_eagle_localrealstate__signup"
+          >
+            Support
+          </a>
         </div>
       </nav>
 
@@ -83,48 +79,34 @@ const LandingPage = () => {
               Contact Agent
             </button>
           </div>
-          <form onSubmit={handleSearch} className="lre_tiger_localrealstate__search">
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter location"
-              className="lre_tiger_localrealstate__search-input"
-              aria-label="Search location"
-            />
-            <select
-              value={propertyType}
-              onChange={(e) => setPropertyType(e.target.value)}
-              className="lre_tiger_localrealstate__search-select"
-              aria-label="Property type"
-            >
-              <option value="all">All Types</option>
-              <option value="house">House</option>
-              <option value="apartment">Apartment</option>
-              <option value="condo">Condo</option>
-            </select>
-            <button type="submit" className="lre_tiger_localrealstate__search-button">
-              Search
-            </button>
-          </form>
         </div>
       </section>
 
-      {/* About */}
+      {/* About Real Estate Section */}
       <section ref={sections.about} className="lre_panda_localrealstate" aria-labelledby="about-heading">
-        <h2 id="about-heading" className="lre_panda_localrealstate__title">About Us</h2>
-        <p className="lre_panda_localrealstate__description">
-          We’re a locally owned real estate agency with deep roots in the community. Our team knows every neighborhood like the back of our hand.
-        </p>
-        <ul className="lre_panda_localrealstate__bullets">
-          <li>✅ 15+ years of hyperlocal market expertise</li>
-          <li>✅ Trusted by 500+ families for seamless transactions</li>
-          <li>✅ Personalized service with no hidden fees</li>
-        </ul>
+        <div className="lre_panda_localrealstate__container">
+          <div className="lre_panda_localrealstate__image">
+            <img 
+              src="https://images.unsplash.com/photo-1504674934578-16b3b3998084?auto=format&fit=crop&w=600&q=80" 
+              alt="Real Estate" 
+              className="lre_panda_localrealstate__img"
+            />
+          </div>
+          <div className="lre_panda_localrealstate__content">
+            <h2 id="about-heading" className="lre_panda_localrealstate__title">About Local Real Estate</h2>
+            <p className="lre_panda_localrealstate__description">
+              We're a locally owned real estate agency with deep roots in the community. Our team knows every neighborhood like the back of our hand.
+            </p>
+            <ul className="lre_panda_localrealstate__bullets">
+              <li>✅ 15+ years of hyperlocal market expertise</li>
+              <li>✅ Trusted by 500+ families for seamless transactions</li>
+              <li>✅ Personalized service with no hidden fees</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
-       
- 
+      
     </div>
   );
 };

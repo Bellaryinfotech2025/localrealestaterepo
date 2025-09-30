@@ -13,13 +13,13 @@ function App() {
       <Routes>
 
         
-                <Route path="/" element={
+                {/* <Route path="/" element={
                   <>
                   <LandingPage/>
 
                           </>
                         }
-                    />
+                    /> */}
 
 <Route path="/register"  element={
 <>
@@ -43,7 +43,7 @@ element={
  
 
          <Route
-          path="/localrealestate"
+          path="/"
           element={
             <>
             <LandingPage/>

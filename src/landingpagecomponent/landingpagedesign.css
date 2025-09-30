@@ -41,7 +41,6 @@ body {
   top: 0;
   width: 100%;
   z-index: 1000;
- 
 }
 
 .lre_eagle_localrealstate__brand {
@@ -187,52 +186,36 @@ body {
   transform: translateY(-3px);
 }
 
-.lre_tiger_localrealstate__search {
-  display: flex;
-  gap: 0.5rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.lre_tiger_localrealstate__search-input,
-.lre_tiger_localrealstate__search-select {
-  padding: 0.75rem;
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  width: 100%;
-}
-
-.lre_tiger_localrealstate__search-input {
-  flex: 3;
-}
-
-.lre_tiger_localrealstate__search-select {
-  flex: 1;
-}
-
-.lre_tiger_localrealstate__search-button {
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.lre_tiger_localrealstate__search-button:hover {
-  background-color: #3ab0d9;
-  transform: translateY(-2px);
-}
-
-/* About */
+/* About Real Estate */
 .lre_panda_localrealstate {
   padding: 5rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+}
+
+.lre_panda_localrealstate__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.lre_panda_localrealstate__image {
+  flex: 1 1 40%;
+  max-width: 500px;
+}
+
+.lre_panda_localrealstate__img {
+  width: 100%;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.lre_panda_localrealstate__content {
+  flex: 1 1 50%;
+  max-width: 600px;
 }
 
 .lre_panda_localrealstate__title {
@@ -263,7 +246,7 @@ body {
   font-size: 1.125rem;
 }
 
-/* Why Choose Us */
+/* Listings */
 .lre_fox_localrealstate {
   padding: 5rem 2rem;
   background-color: white;
@@ -312,58 +295,12 @@ body {
   color: var(--gray);
 }
 
-/* Testimonials */
-.lre_elephant_localrealstate {
-  padding: 5rem 2rem;
-  background-color: #f0f4ff;
-  text-align: center;
-}
-
-.lre_elephant_localrealstate__title {
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: var(--dark);
-}
-
-.lre_elephant_localrealstate__cards {
+/* Why Choose Us */
+.lre_fox_localrealstate__cards {
   display: flex;
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
-}
-
-.lre_elephant_localrealstate__card {
-  background: white;
-  border-radius: var(--border-radius);
-  padding: 2rem;
-  width: 320px;
-  box-shadow: var(--shadow);
-  transition: var(--transition);
-}
-
-.lre_elephant_localrealstate__card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-.lre_elephant_localrealstate__avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1.25rem;
-  border: 2px solid var(--accent);
-}
-
-.lre_elephant_localrealstate__quote {
-  font-style: italic;
-  margin-bottom: 1rem;
-  color: var(--dark);
-}
-
-.lre_elephant_localrealstate__author {
-  font-weight: 600;
-  color: var(--primary);
 }
 
 /* Contact */
@@ -384,6 +321,38 @@ body {
   color: var(--gray);
   max-width: 600px;
   margin: 0 auto;
+}
+
+.lre_dolphin_localrealstate__form {
+  max-width: 600px;
+  margin: 2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lre_dolphin_localrealstate__input,
+.lre_dolphin_localrealstate__textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.lre_dolphin_localrealstate__submit {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lre_dolphin_localrealstate__submit:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
 }
 
 /* Footer */
@@ -460,7 +429,6 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  /* Navbar */
   .lre_eagle_localrealstate__menu-toggle {
     display: flex;
   }
@@ -489,7 +457,6 @@ body {
     max-width: 200px;
   }
 
-  /* Hero */
   .lre_tiger_localrealstate {
     margin-top: 72px;
   }
@@ -507,20 +474,16 @@ body {
     align-items: center;
   }
 
-  .lre_tiger_localrealstate__search {
+  .lre_panda_localrealstate__container {
     flex-direction: column;
+    align-items: center;
   }
 
-  /* About */
-  .lre_panda_localrealstate {
-    padding: 3rem 1.5rem;
+  .lre_panda_localrealstate__image {
+    width: 100%;
+    max-width: 400px;
   }
 
-  .lre_panda_localrealstate__title {
-    font-size: 2rem;
-  }
-
-  /* Why Choose Us */
   .lre_fox_localrealstate__cards {
     flex-direction: column;
     align-items: center;
@@ -531,23 +494,10 @@ body {
     max-width: 400px;
   }
 
-  /* Testimonials */
-  .lre_elephant_localrealstate__cards {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .lre_elephant_localrealstate__card {
-    width: 100%;
-    max-width: 400px;
-  }
-
-  /* Contact */
   .lre_dolphin_localrealstate {
     padding: 3rem 1.5rem;
   }
 
-  /* Footer */
   .lre_whale_localrealstate__links {
     flex-direction: column;
     gap: 1rem;
@@ -564,7 +514,6 @@ body {
   }
 
   .lre_fox_localrealstate__title,
-  .lre_elephant_localrealstate__title,
   .lre_dolphin_localrealstate__title {
     font-size: 2rem;
   }
