@@ -1,21 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FaGlobe } from 'react-icons/fa';
 import '../landingpagecomponent/landingpagedesign.css';
 import { Link } from 'react-router-dom';
+import bgImage1 from "../assets/green.jpg";
+import bgImage2 from "../assets/login.jpg";
+import bgImage3 from "../assets/testomonials.jpg";
 
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const sections = {
-    home: useRef(null),
-    about: useRef(null),
-    listings: useRef(null),
-    why: useRef(null),
-    contact: useRef(null),
-  };
+  const [currentImage, setCurrentImage] = useState(0);
 
-  const scrollToSection = (sectionKey) => {
-    sections[sectionKey].current?.scrollIntoView({ behavior: 'smooth' });
-    setIsMenuOpen(false);
-  };
+  const images = [bgImage1, bgImage2, bgImage3];
+
+  // Auto-rotate hero images every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [images.length]);
 
   // Close mobile menu when resizing to desktop
   useEffect(() => {
@@ -32,81 +35,68 @@ const LandingPage = () => {
     <div className="lre_page_localrealstate">
       {/* Navbar */}
       <nav className="lre_eagle_localrealstate" aria-label="Main navigation">
-        <div className="lre_eagle_localrealstate__brand" onClick={() => scrollToSection('home')}>
-          Local Realestate
+        <div
+          className="lre_eagle_localrealstate__brand"
+          role="button"
+          tabIndex={0}
+        >
+          <FaGlobe className="globe-icon" /> LRE
         </div>
-        <div className="lre_eagle_localrealstate__menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+
+        <div
+          className="lre_eagle_localrealstate__menu-toggle"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          role="button"
+          tabIndex={0}
+        >
           <span></span>
           <span></span>
           <span></span>
         </div>
+
         <div className={`lre_eagle_localrealstate__links ${isMenuOpen ? 'active' : ''}`}>
-          <button onClick={() => scrollToSection('home')} className="lre_eagle_localrealstate__link">Home</button>
-          <button onClick={() => scrollToSection('about')} className="lre_eagle_localrealstate__link">About</button>
-          <button onClick={() => scrollToSection('listings')} className="lre_eagle_localrealstate__link">Listings</button>
-          <button onClick={() => scrollToSection('why')} className="lre_eagle_localrealstate__link">Why Choose Us</button>
-          <button onClick={() => scrollToSection('contact')} className="lre_eagle_localrealstate__link">Contact</button>
-          
-          <Link to="/login" className="lre_eagle_localrealstate__login" style={{textDecoration:'none'}}>Login</Link>
-          <a 
-            href="https://wa.me/919876543210?text=👋%20Hello%20there%21%20%F0%9F%98%89%20I%20need%20help%20with%20real%20estate%20services." 
-            target="_blank" 
+          <button className="lre_eagle_localrealstate__link">Home</button>
+          <button className="lre_eagle_localrealstate__link">About</button>
+          <button className="lre_eagle_localrealstate__link">Listings</button>
+          <button className="lre_eagle_localrealstate__link">Why Choose Us</button>
+          <button className="lre_eagle_localrealstate__link">Contact</button>
+
+          <a
+            href="https://wa.me/917013438163?text=👋%20Hello%20there%21%20%F0%9F%98%89%20I%20need%20help%20with%20real%20estate%20services."
+            target="_blank"
             rel="noopener noreferrer"
             className="lre_eagle_localrealstate__signup"
+            style={{ textDecoration: 'none' }}
           >
             Support
           </a>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section 
-        ref={sections.home} 
+      {/* Hero Section with Rotating Image Slider */}
+      <section
         className="lre_tiger_localrealstate"
-        style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80)' }}
+        style={{ backgroundImage: `url(${images[currentImage]})` }}
         role="banner"
       >
         <div className="lre_tiger_localrealstate__content">
-          <h1 className="lre_tiger_localrealstate__headline">Find Your Dream Home</h1>
+          <h1 className="lre_tiger_localrealstate__headline">WELCOME TO LRE</h1>
           <p className="lre_tiger_localrealstate__subheadline">
+            Real estate cannot be lost or stolen, nor can it be carried away. Purchased with common sense, paid for in full, and managed with reasonable care, it is about the safest investment in the world.” –
             Discover local properties tailored to your lifestyle with expert guidance every step of the way.
           </p>
-          <div className="lre_tiger_localrealstate__cta-group">
-            <button className="lre_tiger_localrealstate__cta-primary" onClick={() => scrollToSection('listings')}>
+          {/* <div className="lre_tiger_localrealstate__cta-group">
+            <button className="lre_tiger_localrealstate__cta-primary">
               See Listings
             </button>
-            <button className="lre_tiger_localrealstate__cta-secondary" onClick={() => scrollToSection('contact')}>
+            <button className="lre_tiger_localrealstate__cta-secondary">
               Contact Agent
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
 
-      {/* About Real Estate Section */}
-      <section ref={sections.about} className="lre_panda_localrealstate" aria-labelledby="about-heading">
-        <div className="lre_panda_localrealstate__container">
-          <div className="lre_panda_localrealstate__image">
-            <img 
-              src="https://images.unsplash.com/photo-1504674934578-16b3b3998084?auto=format&fit=crop&w=600&q=80" 
-              alt="Real Estate" 
-              className="lre_panda_localrealstate__img"
-            />
-          </div>
-          <div className="lre_panda_localrealstate__content">
-            <h2 id="about-heading" className="lre_panda_localrealstate__title">About Local Real Estate</h2>
-            <p className="lre_panda_localrealstate__description">
-              We're a locally owned real estate agency with deep roots in the community. Our team knows every neighborhood like the back of our hand.
-            </p>
-            <ul className="lre_panda_localrealstate__bullets">
-              <li>✅ 15+ years of hyperlocal market expertise</li>
-              <li>✅ Trusted by 500+ families for seamless transactions</li>
-              <li>✅ Personalized service with no hidden fees</li>
-            </ul>
-          </div>
-        </div>
-      </section>
 
-      
     </div>
   );
 };
