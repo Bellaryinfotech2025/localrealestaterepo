@@ -1,447 +1,119 @@
-import { useState, useEffect } from "react";
-import { ChevronDown } from 'lucide-react';
-import "../maindesigncomponent/lrecustomerselectiondesign.css";
-import Footer from "../footercomponent/Footer";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import "../maindesigncomponent/Lrecustomerselectiondesign.css";
+import image1 from "../assets/smartcity.jpg";
+import image2 from "../assets/spacecity .jpg";
+import image3 from "../assets/mangopardise.jpg";
+import image4 from "../assets/vayuputra.jpg";
 
 const Lrecustomerselection = () => {
   const [activeTab, setActiveTab] = useState("Kurnool");
-  const [selectedOption, setSelectedOption] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [fullscreenImage, setFullscreenImage] = useState(null);
+  const [expandedCard, setExpandedCard] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const [visitedCards, setVisitedCards] = useState(() => {
+    return JSON.parse(localStorage.getItem("visitedCards")) || [];
+  });
+  const [magnifier, setMagnifier] = useState({ x: 0, y: 0, visible: false, zoom: 2 });
+
+  const modalRef = useRef(null);
+  const magnifierRef = useRef(null);
 
   const tabs = ["Kurnool", "Hyderabad"];
 
-  const tabOptions = {
-    "Kurnool": ["Location", "City Outskirts", "Local City", "Border", "Land Use"],
-    "Hyderabad": ["Location", "City Outskirts", "Local City", "Border", "Land Use"]
-  };
-
   const realEstateData = {
-    Kurnool: {
-      "Location": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "City Outskirts": [
-
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-
-      ],
-      "Local City": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "Border": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "Land Use": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ]
-    },
-    Hyderabad: {
-      "Location": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "City Outskirts": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "Local City": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "Border": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ],
-      "Land Use": [
-        {
-          id: 1,
-          title: "SMART CITY",
-          price: "₹6,000,00",
-          area: "3 CENTS 30*44",
-          location: "KALVA BUGGA ,ORVAKAL,KURNOOL",
-          image: "src/assets/smartcity.jpg",
-          description: " IN 450 MTS NEAR BY DRDO,AP GURUKULA SCHOOL,NH40"
-        },
-        {
-          id: 2,
-          title: "SPACE CITY ",
-          price: "₹6,000,00",
-          area: "3. cents 30*44",
-          location: "NEAR H8 DABBA,NANNUR,KURNOOL",
-          image: "src/assets/spacecity .jpg",
-          description: "NEAR TO AIRPORT AND ORVAKAL INDUSTRIAL HUB,KURNOOL TO NANDYAL ROAD"
-        },
-        {
-          id: 3,
-          title: "Mango Pardise",
-          price: "₹6,000,00",
-          area: "3.3 cents 30*48",
-          location: "GUTTAPADU,ORVAKAL,KURNOOL",
-          image: "src/assets/mangopardise.jpg",
-          description: "KURNOOL TO THIPPAYAPALI ROAD"
-        },
-        {
-          id: 4,
-          title: "Vayuputra township II",
-          price: "₹6,000,00",
-          area: "3 cents 30*40",
-          location: "GUTTAPADU ,KURNOOL",
-          image: "src/assets/vayuputra.jpg",
-          description: "100% vastu,30*40 CC roads clear title,guttapadu,orvakal,krnool"
-        }
-      ]
-    }
+    Kurnool: [
+      { id: 1, title: "SMART CITY", price: "₹6,00,000", area: "3 CENTS 30×44", location: "Kalva Bugga, Orvakal, Kurnool", image: image1, description: "In 450 mts nearby DRDO, AP Gurukula School, NH40 — perfect investment opportunity." },
+      { id: 2, title: "SPACE CITY", price: "₹6,00,000", area: "3 CENTS 30×44", location: "Near H8 Dabba, Nannur, Kurnool", image: image2, description: "Close to Airport & Orvakal Industrial Hub, excellent road connectivity." },
+      { id: 3, title: "MANGO PARADISE", price: "₹6,00,000", area: "3.3 CENTS 30×48", location: "Guttapadu, Orvakal, Kurnool", image: image3, description: "Green surroundings with easy access to Kurnool–Thippayapalli road." },
+      { id: 4, title: "VAYUPUTRA TOWNSHIP II", price: "₹6,00,000", area: "3 CENTS 30×40", location: "Guttapadu, Kurnool", image: image4, description: "100% vastu, CC roads, clear title, well-developed and peaceful area." },
+    ],
+    Hyderabad: [],
   };
 
-  const getCurrentProperties = () => {
-    const mainTab = activeTab;
-    const subTab = selectedOption;
-    if (realEstateData[mainTab] && realEstateData[mainTab][subTab]) {
-      return realEstateData[mainTab][subTab];
-    }
-    return [];
-  };
-
-  const handleDropdownSelect = (option) => {
-    setSelectedOption(option);
-    setShowDropdown(false);
+  const getUploadedImages = () => {
+    const allImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+    return allImages.filter((img) => img.location === activeTab);
   };
 
   useEffect(() => {
-    const options = tabOptions[activeTab];
-    if (options && options.length > 0) {
-      setSelectedOption(options[0]);
-    }
+    setUploadedImages(getUploadedImages());
+    const updateImages = () => setUploadedImages(getUploadedImages());
+    window.addEventListener("imagesUpdated", updateImages);
+    return () => window.removeEventListener("imagesUpdated", updateImages);
   }, [activeTab]);
+
+  const getCurrentProperties = () => [...(realEstateData[activeTab] || []), ...uploadedImages];
+
+  const handleCardClick = (id) => {
+    setExpandedCard(id);
+
+    if (!visitedCards.includes(id)) {
+      const updatedVisited = [...visitedCards, id];
+      setVisitedCards(updatedVisited);
+      localStorage.setItem("visitedCards", JSON.stringify(updatedVisited));
+    }
+  };
+
+  const closeModal = () => setExpandedCard(null);
+
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    if (expandedCard !== null) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.body.style.overflow = "auto";
+    }
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [expandedCard]);
+
+  const expandedProperty = getCurrentProperties().find(p => p.id === expandedCard);
+
+  // Handle magnifier movement
+  const handleMouseMove = (e) => {
+    const img = e.currentTarget;
+    const rect = img.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    setMagnifier({
+      ...magnifier,
+      x,
+      y,
+      visible: true,
+      imgWidth: img.offsetWidth,
+      imgHeight: img.offsetHeight
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setMagnifier({ ...magnifier, visible: false });
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    let newZoom = magnifier.zoom + (e.deltaY < 0 ? 0.2 : -0.2);
+    if (newZoom < 1) newZoom = 1;
+    if (newZoom > 5) newZoom = 5;
+    setMagnifier({ ...magnifier, zoom: newZoom });
+  };
 
   return (
     <div className="real-estate-wrapper">
       <div className="real-estate-container">
         <h1 className="real-estate-main-heading">Find Your Perfect Property</h1>
 
-        {/* Tab Navigation */}
         <nav className="real-estate-nav">
           {tabs.map((tab, index) => (
             <button
               key={tab}
               className={`real-estate-tab ${activeTab === tab ? "active" : ""}`}
-              onClick={() => {
-                setActiveTab(tab);
-                setShowDropdown(false);
-              }}
+              onClick={() => setActiveTab(tab)}
               style={{ animationDelay: `${0.1 * index}s` }}
             >
               {tab}
@@ -449,92 +121,94 @@ const Lrecustomerselection = () => {
           ))}
         </nav>
 
-        {/* Dropdown for selected tab */}
-        <div className="dropdown-section">
-          <div className="custom-dropdown-container">
-            <button
-              className="dropdown-toggle"
-              onClick={() => setShowDropdown(!showDropdown)}
-            >
-              <span>{selectedOption || `Select ${activeTab} Option`}</span>
-              <ChevronDown className={`dropdown-arrow ${showDropdown ? "rotated" : ""}`} />
-            </button>
-
-            {showDropdown && (
-              <div className="dropdown-menu">
-                {tabOptions[activeTab].map((option, index) => (
-                  <div
-                    key={index}
-                    className="dropdown-item"
-                    onClick={() => handleDropdownSelect(option)}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Property Listings */}
         <div className="property-grid">
-          {getCurrentProperties().map((property, index) => (
+          {getCurrentProperties().map((property) => (
             <div
               key={property.id}
-              className="property-card"
-              style={{ animationDelay: `${0.1 * index}s` }}
+              className={`property-card ${visitedCards.includes(property.id) ? "visited" : ""}`}
+              onClick={() => handleCardClick(property.id)}
             >
-              <div className="property-image-container">
-                <img
-                  src={property.image}
-                  alt={property.title}
-                  className="property-image"
-                  onClick={() => setFullscreenImage(property.image)}
-                />
-                <div className="property-badge">{activeTab}</div>
-              </div>
-
-              <div className="property-details">
-                <h3 className="property-title">{property.title}</h3>
-                <p className="property-location">{property.location}</p>
-                <p className="property-description">{property.description}</p>
-
-                <div className="property-info">
-                  <div className="property-area">
-                    <span className="info-label">Area:</span>
-                    <span className="info-value">{property.area}</span>
+              <div className="property-flex">
+                <div className="property-left">
+                  <div className="image-wrapper">
+                    <img src={property.image || property.url} alt={property.title} className="property-image" />
                   </div>
-                  <div className="property-price">
-                    <span className="price-label">Price:</span>
-                    <span className="price-value">{property.price}</span>
+                  <div className="property-info-box">
+                    <p><strong>Location:</strong> {property.location}</p>
+                    <p><strong>Area:</strong> {property.area}</p>
+                    <p><strong>Price:</strong> {property.price}</p>
                   </div>
                 </div>
-
-                {/* WhatsApp Contact Button */}
-                <a
-                  href={`https://wa.me/917013438163?text=Hey%20I%20want%20to%20know%20more%20about%20this%20%3F`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="view-details-btn"
-                >
-                  Contact us
-                </a>
+                <div className="property-right">
+                  <h3 className="property-title">{property.title}</h3>
+                  <h4 className="features-heading">Features</h4>
+                  <p className="property-description">{property.description || property.features}</p>
+                  <a
+                    href={`https://wa.me/917013438163?text=Hey%20I%20want%20to%20know%20more%20about%20${property.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="view-details-btn"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Contact Us
+                  </a>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Fullscreen Image Modal */}
-        {fullscreenImage && (
-          <div className="fullscreen-modal" onClick={() => setFullscreenImage(null)}>
-            <img src={fullscreenImage} alt="Full screen" className="fullscreen-image" />
+        {expandedProperty && (
+          <div className="modal-overlay">
+            <div className="modal-content" ref={modalRef}>
+              <button className="close-btn" onClick={closeModal}>✕</button>
+              <div className="modal-flex">
+                <div className="property-left">
+                  <div className="image-wrapper modal-image-wrapper"
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    onWheel={handleWheel}
+                  >
+                    <img src={expandedProperty.image || expandedProperty.url} alt={expandedProperty.title} className="property-image" />
+                    {magnifier.visible && (
+                      <div
+                        className="magnifier-lens"
+                        ref={magnifierRef}
+                        style={{
+                          backgroundImage: `url(${expandedProperty.image || expandedProperty.url})`,
+                          backgroundSize: `${magnifier.imgWidth * magnifier.zoom}px ${magnifier.imgHeight * magnifier.zoom}px`,
+                          backgroundPosition: `-${magnifier.x * magnifier.zoom - 75}px -${magnifier.y * magnifier.zoom - 75}px`,
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div className="property-info-box">
+                    <p><strong>Location:</strong> {expandedProperty.location}</p>
+                    <p><strong>Area:</strong> {expandedProperty.area}</p>
+                    <p><strong>Price:</strong> {expandedProperty.price}</p>
+                  </div>
+                </div>
+                <div className="property-right">
+                  <h3 className="property-title">{expandedProperty.title}</h3>
+                  <h4 className="features-heading">Features</h4>
+                  <p className="property-description">{expandedProperty.description || expandedProperty.features}</p>
+                  <a
+                    href={`https://wa.me/917013438163?text=Hey%20I%20want%20to%20know%20more%20about%20${expandedProperty.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="view-details-btn"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         )}
-
 
       </div>
     </div>
   );
-}
+};
 
 export default Lrecustomerselection;

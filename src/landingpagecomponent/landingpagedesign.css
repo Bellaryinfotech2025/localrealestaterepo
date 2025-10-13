@@ -29,80 +29,6 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Navbar */
-.lre_eagle_localrealstate {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem 2rem;
-  background-color: white;
-  box-shadow: var(--shadow);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.lre_eagle_localrealstate__brand {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.lre_eagle_localrealstate__links {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.lre_eagle_localrealstate__link,
-.lre_eagle_localrealstate__login {
-  text-decoration: none;
-  color: var(--dark);
-  font-weight: 500;
-  transition: var(--transition);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.25rem 0;
-}
-
-.lre_eagle_localrealstate__link:hover,
-.lre_eagle_localrealstate__login:hover {
-  color: var(--primary);
-}
-
-.lre_eagle_localrealstate__signup {
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: var(--border-radius);
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.lre_eagle_localrealstate__signup:hover {
-  background-color: var(--secondary);
-  transform: translateY(-2px);
-}
-
-.lre_eagle_localrealstate__menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 4px;
-}
-
-.lre_eagle_localrealstate__menu-toggle span {
-  width: 25px;
-  height: 3px;
-  background-color: var(--dark);
-  border-radius: 2px;
-}
-
 /* Hero */
 .lre_tiger_localrealstate {
   height: 100vh;
@@ -296,14 +222,6 @@ body {
   color: var(--gray);
 }
 
-/* Why Choose Us */
-.lre_fox_localrealstate__cards {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
 /* Contact */
 .lre_dolphin_localrealstate {
   padding: 5rem 2rem;
@@ -430,34 +348,6 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .lre_eagle_localrealstate__menu-toggle {
-    display: flex;
-  }
-
-  .lre_eagle_localrealstate__links {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    padding: 1.5rem;
-    gap: 1.25rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateY(-150%);
-    transition: transform 0.3s ease;
-  }
-
-  .lre_eagle_localrealstate__links.active {
-    transform: translateY(0);
-  }
-
-  .lre_eagle_localrealstate__signup {
-    align-self: center;
-    width: 100%;
-    max-width: 200px;
-  }
-
   .lre_tiger_localrealstate {
     margin-top: 72px;
   }

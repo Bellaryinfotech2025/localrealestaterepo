@@ -1,0 +1,373 @@
+/* ---------------- GENERAL WRAPPER ---------------- */
+.gallery-wrapper {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #333;
+}
+
+/* ---------------- ADMIN LOGIN ---------------- */
+.admin-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 60px auto;
+}
+
+.admin-login h2 {
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.admin-login input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.admin-login button {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-login button:hover {
+    background: #218838;
+}
+
+/* ---------------- ADMIN ACTIONS ---------------- */
+.admin-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.admin-actions button {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-actions button:hover {
+    background: #0056b3;
+}
+
+/* ---------------- GALLERY UPLOAD ---------------- */
+.gallery-heading {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.gallery-instructions {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.gallery-upload {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.gallery-upload input,
+.gallery-upload select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.gallery-upload button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-upload button:hover {
+    background: #218838;
+}
+
+.gallery-error {
+    color: red;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+/* ---------------- GALLERY GRID ---------------- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.gallery-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.gallery-card.hovered {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-left,
+.card-right {
+    padding: 10px;
+}
+
+.card-left {
+    flex: 1;
+}
+
+.card-left img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.gallery-card:hover .card-left img {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-right {
+    flex: 1;
+    transition: transform 0.4s ease;
+}
+
+.gallery-card:hover .card-right {
+    transform: translateX(-10px);
+}
+
+.gallery-card:hover {
+    background: #f1f5f9;
+}
+
+.card-right h3 {
+    margin: 0 0 8px 0;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(220, 53, 69, 0.8);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+    background: rgba(220, 53, 69, 1);
+}
+
+.load-more-btn {
+    padding: 12px 25px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 8px;
+    border: none;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    background: #0056b3;
+}
+
+.no-images {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
+/* ---------------- MODAL ---------------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 700px;
+    width: 90%;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-image {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.modal-details h2 {
+    margin: 0 0 10px 0;
+}
+
+/* ---------------- SUCCESS POPUP ---------------- */
+.success-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.success-popup::before,
+.success-popup::after {
+    content: "";
+    position: absolute;
+    background-color: #28a745;
+    border-radius: 4px;
+    opacity: 1;
+    box-shadow: 0 0 12px #28a745, 0 0 20px #28a745;
+}
+
+.success-popup::before {
+    width: 0;
+    height: 6px;
+    top: 27px;
+    left: 0;
+    transform: rotate(45deg);
+    animation: swipe-long 0.5s forwards, fade-scale 1s forwards 0.5s;
+}
+
+.success-popup::after {
+    width: 0;
+    height: 6px;
+    top: 27px;
+    left: 0;
+    transform: rotate(-45deg);
+    animation: swipe-short 0.5s forwards 0.2s, fade-scale 1s forwards 0.7s;
+}
+
+@keyframes swipe-long {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 35px;
+    }
+}
+
+@keyframes swipe-short {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 20px;
+    }
+}
+
+@keyframes fade-scale {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.6);
+    }
+}
+
+/* ---------------- TAG STYLING ---------------- */
+.tag {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.tag.knl {
+    background-color: #28a745;
+}
+
+/* Kurnool → green */
+.tag.hyd {
+    background-color: #007bff;
+}
+
+/* Hyderabad → blue */
