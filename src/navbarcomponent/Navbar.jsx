@@ -21,7 +21,7 @@ const Navbar = ({ footerRef }) => {
 
     const handleSupportClick = () => {
         setIsOpen(false);
-        window.open("https://wa.me/1234567890", "_blank");
+        window.open("https://wa.me/7013438163", "_blank");
     };
 
     const closeMenu = () => setIsOpen(false);

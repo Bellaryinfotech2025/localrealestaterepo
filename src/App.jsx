@@ -32,7 +32,7 @@ function App() {
             }
           />
 
-          <Route path="/admin/localrealestate/propertyK28fR7tL8vM4yQ0aH1zN6wS3xP5eJ9cD2uB7gT1A5nV3pL6rC8mF9qZ2sY4jX0dK7bW1hE5tG9lR3oM8vN2uP6yQ4zT1aR9cF7" element={<Admin />} />
+          <Route path="/admin/localrealestate/property-access-98f2b7t1a5v3l6r" element={<Admin />} />
 
         </Routes>
       </Router>
