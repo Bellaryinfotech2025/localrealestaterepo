@@ -1,90 +1,106 @@
-/* ---------------- GENERAL WRAPPER ---------------- */
+/* ========================== GENERAL WRAPPER ========================== */
 .gallery-wrapper {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
     color: #333;
+    background: #f5f7fa;
+    min-height: 100vh;
 }
 
-/* ---------------- ADMIN LOGIN ---------------- */
+/* ========================== ADMIN LOGIN ========================== */
 .admin-login {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 40px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 60px auto;
+    gap: 15px;
+    padding: 50px 40px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    max-width: 420px;
+    margin: 80px auto;
+    transition: all 0.3s ease;
 }
 
 .admin-login h2 {
     margin-bottom: 20px;
-    color: #007bff;
+    color: #0d6efd;
+    font-size: 28px;
+    font-weight: 600;
 }
 
 .admin-login input {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 8px;
+    padding: 14px 16px;
+    border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.admin-login input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
+    outline: none;
 }
 
 .admin-login button {
     width: 100%;
-    padding: 12px;
-    background: #28a745;
+    padding: 14px;
+    background: #198754;
     color: #fff;
-    font-weight: bold;
+    font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
+    font-size: 16px;
     transition: all 0.3s ease;
 }
 
 .admin-login button:hover {
-    background: #218838;
+    background: #157347;
 }
 
-/* ---------------- ADMIN ACTIONS ---------------- */
+/* ========================== ADMIN ACTIONS ========================== */
 .admin-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
 .admin-actions button {
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
     border: none;
-    background: #007bff;
+    background: #0d6efd;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .admin-actions button:hover {
-    background: #0056b3;
+    background: #0b5ed7;
 }
 
-/* ---------------- GALLERY UPLOAD ---------------- */
+/* ========================== GALLERY UPLOAD ========================== */
 .gallery-heading {
     text-align: center;
-    font-size: 28px;
+    font-size: 32px;
     margin-bottom: 15px;
+    color: #0d6efd;
+    font-weight: 600;
 }
 
 .gallery-instructions {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #555;
+    font-size: 16px;
 }
 
 .gallery-upload {
@@ -97,35 +113,44 @@
 
 .gallery-upload input,
 .gallery-upload select {
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 10px;
     border: 1px solid #ccc;
-    font-size: 14px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.gallery-upload input:focus,
+.gallery-upload select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
+    outline: none;
 }
 
 .gallery-upload button {
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 12px 22px;
+    border-radius: 10px;
     border: none;
-    background: #28a745;
+    background: #198754;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .gallery-upload button:hover {
-    background: #218838;
+    background: #157347;
 }
 
 .gallery-error {
-    color: red;
+    color: #dc3545;
     font-weight: bold;
     width: 100%;
     text-align: center;
+    margin-top: 8px;
 }
 
-/* ---------------- GALLERY GRID ---------------- */
+/* ========================== GALLERY GRID ========================== */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -133,10 +158,10 @@
 }
 
 .gallery-card {
-    background: #fff;
-    border-radius: 12px;
+    background: #ffffff;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
     cursor: pointer;
     display: flex;
     transition: all 0.3s ease;
@@ -144,13 +169,13 @@
 }
 
 .gallery-card.hovered {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
 }
 
 .card-left,
 .card-right {
-    padding: 10px;
+    padding: 12px;
 }
 
 .card-left {
@@ -159,16 +184,16 @@
 
 .card-left img {
     width: 100%;
-    height: 150px;
+    height: 160px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-bottom: 10px;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .gallery-card:hover .card-left img {
-    transform: scale(1.08);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.06);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .card-right {
@@ -177,27 +202,25 @@
 }
 
 .gallery-card:hover .card-right {
-    transform: translateX(-10px);
-}
-
-.gallery-card:hover {
-    background: #f1f5f9;
+    transform: translateX(-6px);
 }
 
 .card-right h3 {
     margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #0d6efd;
 }
 
 .remove-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    background: rgba(220, 53, 69, 0.8);
+    top: 10px;
+    right: 10px;
+    background: rgba(220, 53, 69, 0.85);
     border: none;
     color: white;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -208,20 +231,20 @@
 }
 
 .load-more-btn {
-    padding: 12px 25px;
-    margin: 20px auto;
+    padding: 14px 28px;
+    margin: 25px auto;
     display: block;
-    border-radius: 8px;
+    border-radius: 10px;
     border: none;
-    background: #007bff;
+    background: #0d6efd;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .load-more-btn:hover {
-    background: #0056b3;
+    background: #0b5ed7;
 }
 
 .no-images {
@@ -230,14 +253,14 @@
     color: #555;
 }
 
-/* ---------------- MODAL ---------------- */
+/* ========================== MODAL ========================== */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -246,38 +269,40 @@
 
 .modal-content {
     background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    max-width: 700px;
-    width: 90%;
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 720px;
+    width: 95%;
     position: relative;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
 }
 
 .modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
     background: #dc3545;
     border: none;
     color: white;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     font-weight: bold;
     cursor: pointer;
 }
 
 .modal-image {
     width: 100%;
-    border-radius: 12px;
-    margin-bottom: 15px;
+    border-radius: 14px;
+    margin-bottom: 18px;
 }
 
 .modal-details h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
+    color: #0d6efd;
 }
 
-/* ---------------- SUCCESS POPUP ---------------- */
+/* ========================== SUCCESS POPUP ========================== */
 .success-popup {
     position: fixed;
     top: 50%;
@@ -293,10 +318,10 @@
 .success-popup::after {
     content: "";
     position: absolute;
-    background-color: #28a745;
+    background-color: #198754;
     border-radius: 4px;
     opacity: 1;
-    box-shadow: 0 0 12px #28a745, 0 0 20px #28a745;
+    box-shadow: 0 0 12px #198754, 0 0 20px #198754;
 }
 
 .success-popup::before {
@@ -349,25 +374,123 @@
     }
 }
 
-/* ---------------- TAG STYLING ---------------- */
+/* ========================== TAG STYLING ========================== */
 .tag {
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 6px;
     font-size: 12px;
     color: white;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
     display: inline-block;
-    margin-top: 4px;
+    margin-top: 5px;
 }
 
 .tag.knl {
-    background-color: #28a745;
+    background-color: #198754;
 }
 
 /* Kurnool → green */
 .tag.hyd {
-    background-color: #007bff;
+    background-color: #0d6efd;
 }
 
 /* Hyderabad → blue */
+/* ========================== PASSWORD TOGGLE ========================== */
+.password-group {
+    position: relative;
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: #0d6efd;
+}
+
+/* ========================== LOGOUT POPUP ========================== */
+.logout-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.logout-popup {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px 25px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    animation: popupFadeIn 0.3s ease forwards;
+}
+
+.logout-popup h3 {
+    margin-bottom: 25px;
+    font-size: 20px;
+    color: #0d6efd;
+}
+
+.logout-popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.logout-popup-buttons button {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.logout-popup-buttons .logout-btn {
+    background: #dc3545;
+    color: #fff;
+}
+
+.logout-popup-buttons .logout-btn:hover {
+    background: #b02a37;
+}
+
+.logout-popup-buttons .stay-btn {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.logout-popup-buttons .stay-btn:hover {
+    background: #0b5ed7;
+}
+
+/* ========================== ANIMATION ========================== */
+@keyframes popupFadeIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

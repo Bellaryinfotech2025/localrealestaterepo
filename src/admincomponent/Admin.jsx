@@ -25,7 +25,9 @@ export default function SuperAdminGallery() {
     // Admin login state
     const [adminEmail, setAdminEmail] = useState("");
     const [adminPassword, setAdminPassword] = useState("");
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 
     useEffect(() => {
         try {
@@ -144,11 +146,18 @@ export default function SuperAdminGallery() {
     const loadMore = () => setVisibleCount((prev) => prev + 12);
 
     const handleLogout = () => {
+        setShowLogoutPopup(true);
+    };
+
+    const confirmLogout = () => {
         setIsLoggedIn(false);
         setAdminEmail("");
         setAdminPassword("");
+        setShowLogoutPopup(false);
         window.location.href = "/";
     };
+
+    const cancelLogout = () => setShowLogoutPopup(false);
 
     const handleHome = () => {
         if (!isLoggedIn) {
@@ -178,12 +187,20 @@ export default function SuperAdminGallery() {
                         value={adminEmail}
                         onChange={(e) => setAdminEmail(e.target.value)}
                     />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={adminPassword}
-                        onChange={(e) => setAdminPassword(e.target.value)}
-                    />
+                    <div className="password-group">
+                        <input
+                            type={passwordVisible ? "text" : "password"}
+                            placeholder="Password"
+                            value={adminPassword}
+                            onChange={(e) => setAdminPassword(e.target.value)}
+                        />
+                        <span
+                            className="password-toggle"
+                            onClick={() => setPasswordVisible(!passwordVisible)}
+                        >
+                            {passwordVisible ? "👁️‍🗨️" : "👁️"}
+                        </span>
+                    </div>
                     <button onClick={handleAdminLogin}>Login</button>
                 </div>
             ) : (
@@ -287,6 +304,18 @@ export default function SuperAdminGallery() {
                     )}
 
                     {showSuccess && <div className="success-popup"></div>}
+
+                    {showLogoutPopup && (
+                        <div className="logout-popup-overlay">
+                            <div className="logout-popup">
+                                <h3>Are you sure you want to logout?</h3>
+                                <div className="logout-popup-buttons">
+                                    <button className="logout-btn" onClick={confirmLogout}>Logout</button>
+                                    <button className="stay-btn" onClick={cancelLogout}>Stay</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
         </div>
