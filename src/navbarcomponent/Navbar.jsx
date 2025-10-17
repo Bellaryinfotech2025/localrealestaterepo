@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../navbarcomponent/Navbardesigin.css";
 
 const Navbar = ({ footerRef }) => {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef(null);
+    const navigate = useNavigate();
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -23,6 +25,11 @@ const Navbar = ({ footerRef }) => {
     const handleSupportClick = () => {
         setIsOpen(false);
         window.open("https://wa.me/7013438163", "_blank");
+    };
+
+    const handleAdminClick = () => {
+        setIsOpen(false);
+        navigate("/Admin");
     };
 
     const closeMenu = () => setIsOpen(false);
@@ -95,6 +102,13 @@ const Navbar = ({ footerRef }) => {
                     <li className="nav-item4">
                         <button className="nav-link4" onClick={handleSupportClick}>
                             🌐 Support
+                        </button>
+                    </li>
+
+                    {/* 🛠️ New Admin Button */}
+                    <li className="nav-item4">
+                        <button className="nav-link4" onClick={handleAdminClick}>
+                            Admin
                         </button>
                     </li>
                 </ul>
