@@ -1,17 +1,14 @@
-/* ========================
-   Customer Reviews Section
-   ======================== */
-.reviews-section {
+.local-reviews {
     padding: 2rem 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(-45deg, #e0f7fa, #f0f4ff, #e8f5e9, #fff8f0);
+    background: linear-gradient(-45deg, #e0f7fa, #f0f8ff, #e8f5e9, #fff8f0);
     background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
+    animation: gradientAnim 25s ease infinite;
     position: relative;
     overflow: hidden;
 }
 
-@keyframes gradientAnimation {
+@keyframes gradientAnim {
     0% {
         background-position: 0% 50%;
     }
@@ -25,33 +22,34 @@
     }
 }
 
-.reviews-section::before,
-.reviews-section::after {
-    content: "";
+/* Animated bubbles */
+.local-reviews .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.05;
+    background: rgba(66, 165, 245, 0.1);
     z-index: 0;
+    animation: floatBubble 20s linear infinite;
 }
 
-.reviews-section::before {
-    width: 200px;
-    height: 200px;
-    background: #b2ebf2;
-    top: -40px;
-    left: -40px;
-}
+@keyframes floatBubble {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.2;
+    }
 
-.reviews-section::after {
-    width: 300px;
-    height: 300px;
-    background: #c8e6c9;
-    bottom: -80px;
-    right: -80px;
+    50% {
+        transform: translateY(-50px) translateX(20px);
+        opacity: 0.1;
+    }
+
+    100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.2;
+    }
 }
 
 .reviews-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
@@ -64,7 +62,7 @@
 
 .section-badge {
     font-weight: 600;
-    color: #4db6ac;
+    color: #42a5f5;
     margin-bottom: 0.5rem;
     display: inline-flex;
     align-items: center;
@@ -78,7 +76,7 @@
 }
 
 .section-title .highlight {
-    color: #4db6ac;
+    color: #42a5f5;
 }
 
 .section-subtitle {
@@ -94,25 +92,22 @@
     flex-wrap: wrap;
 }
 
-/* Active Review */
 .active-review {
     flex: 2 1 600px;
 }
 
 .review-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: #ffffff;
     padding: 1.5rem;
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 .quote-icon {
-    color: #4db6ac;
+    color: #42a5f5;
 }
 
 .review-text {
@@ -130,14 +125,13 @@
 .reviewer-avatar {
     width: 50px;
     height: 50px;
-    background-color: #4db6ac;
+    background-color: #42a5f5;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
     font-weight: 700;
-    font-size: 1rem;
 }
 
 .reviewer-details {
@@ -155,10 +149,9 @@
 }
 
 .star.filled {
-    stroke: #26a69a;
+    stroke: #42a5f5;
 }
 
-/* Navigation */
 .reviews-navigation {
     flex: 1 1 300px;
     display: flex;
@@ -176,7 +169,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #26a69a;
+    color: #42a5f5;
 }
 
 .review-thumbnails {
@@ -194,21 +187,17 @@
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 12px;
-    transition: background 0.3s, transform 0.2s;
-}
-
-.thumbnail:hover {
-    transform: translateX(5px);
+    transition: background 0.3s;
 }
 
 .thumbnail.active {
-    background: rgba(38, 166, 154, 0.12);
+    background: rgba(66, 165, 245, 0.12);
 }
 
 .thumbnail-avatar {
     width: 40px;
     height: 40px;
-    background: #26a69a;
+    background: #42a5f5;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -243,7 +232,7 @@
 }
 
 .nav-btn {
-    background: #26a69a;
+    background: #42a5f5;
     border: none;
     color: #fff;
     padding: 0.4rem;
@@ -251,7 +240,6 @@
     cursor: pointer;
 }
 
-/* CTA */
 .reviews-cta {
     margin-top: 2rem;
     text-align: center;
@@ -267,24 +255,10 @@
     color: #607d8b;
 }
 
-/* ========================
-   Responsive Breakpoints
-   ======================== */
+/* Responsive */
 @media (max-width: 1024px) {
     .reviews-content {
         flex-direction: column;
-    }
-
-    .reviews-navigation {
-        flex-direction: row;
-        overflow-x: auto;
-        padding-bottom: 1rem;
-    }
-
-    .review-thumbnails {
-        flex-direction: row;
-        gap: 0.5rem;
-        max-height: none;
     }
 }
 
@@ -320,29 +294,18 @@
     .thumbnail-content p {
         font-size: 0.75rem;
     }
-
-    .reviews-navigation {
-        flex-direction: row;
-        gap: 0.75rem;
-        overflow-x: auto;
-    }
-
-    .review-thumbnails {
-        flex-direction: row;
-        max-height: none;
-    }
 }
 
 @media (max-width: 480px) {
-    .section-subtitle {
+    .reviews-container {
+        padding: 0 0.5rem;
+    }
+
+    .review-text {
         font-size: 0.9rem;
     }
 
-    .reviews-cta h3 {
-        font-size: 1.2rem;
-    }
-
-    .reviews-cta p {
-        font-size: 0.85rem;
+    .reviews-navigation {
+        max-height: 300px;
     }
 }
