@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./navbarcomponent/Navbar"
-import LandingPage from "./landingpagecomponent/LandingPage";
+import LandingPage from "./landingpagecomponent/landingpage";
 import Lrecustomerselection from "./maincomponent/Lrecustomerselection";
 import Feature from "./feauturescomponent/Feature"
 import Footer from "./footercomponent/Footer"
