@@ -1,323 +1,500 @@
-import { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../admincomponent/Admindesigin.css";
 
-export default function SuperAdminGallery() {
-    const [images, setImages] = useState(() => {
-        try {
-            return JSON.parse(localStorage.getItem("uploadedImages")) || [];
-        } catch {
-            return [];
-        }
-    });
+const Admin = () => {
+    const navigate = useNavigate();
 
-    const [file, setFile] = useState(null);
-    const [title, setTitle] = useState("");
-    const [location, setLocation] = useState("");
-    const [area, setArea] = useState("");
-    const [price, setPrice] = useState("");
-    const [features, setFeatures] = useState("");
-    const [error, setError] = useState("");
-    const [hoverIndex, setHoverIndex] = useState(-1);
-    const [expandedImage, setExpandedImage] = useState(null);
-    const [visibleCount, setVisibleCount] = useState(12);
-    const [showSuccess, setShowSuccess] = useState(false);
-
-    // Admin login state
-    const [adminEmail, setAdminEmail] = useState("");
-    const [adminPassword, setAdminPassword] = useState("");
-    const [passwordVisible, setPasswordVisible] = useState(false);
+    // ------------------ Persistent Login ------------------
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+    const [showSuccessToast, setShowSuccessToast] = useState(false);
+
+    // ------------------ Property States ------------------
+    const [property, setProperty] = useState({
+        title: "",
+        city: "Kurnool",
+        areaSqFt: "",
+        areaCents: "",
+        price: "",
+        features: "",
+        image: null,
+        video: null,
+    });
+    const [propertyList, setPropertyList] = useState([]);
+    const [draggingImage, setDraggingImage] = useState(false);
+    const [draggingVideo, setDraggingVideo] = useState(false);
+    const [imagePreview, setImagePreview] = useState(null);
+    const [videoPreview, setVideoPreview] = useState(null);
+    const [greeting, setGreeting] = useState("");
+
+    const imageRef = useRef(null);
+    const videoRef = useRef(null);
+
+    // ------------------ Restore Login on Refresh ------------------
+    useEffect(() => {
+        const savedLogin = localStorage.getItem("isAdminLoggedIn");
+        if (savedLogin === "true") {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+    // ------------------ Load uploaded properties ------------------
+    useEffect(() => {
+        const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+        setPropertyList(
+            uploadedImages.map((img) => ({
+                id: img.id,
+                title: img.title,
+                price: img.price.replace("₹", ""),
+                areaSqFt: img.area.split(" sq.ft")[0],
+                areaCents: img.area.split("/ ")[1].replace(" cents", ""),
+                city: img.location,
+                features: img.features,
+                imageURL: img.image,
+                videoURL: img.video,
+            }))
+        );
+    }, []);
+
+    // ------------------ Time-Based Greeting ------------------
+    const updateGreeting = () => {
+        const hour = new Date().getHours();
+        if (hour >= 5 && hour < 12) setGreeting("Good Morning");
+        else if (hour >= 12 && hour < 17) setGreeting("Good Afternoon");
+        else if (hour >= 17 && hour < 21) setGreeting("Good Evening");
+        else setGreeting("Good Night");
+    };
 
     useEffect(() => {
-        try {
-            localStorage.setItem("uploadedImages", JSON.stringify(images));
-        } catch (err) {
-            console.error("Error saving to localStorage:", err);
-            setError("⚠️ Storage full. Delete some images first.");
+        updateGreeting();
+        const interval = setInterval(updateGreeting, 60 * 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    // ------------------ Login Handler (Fixed) ------------------
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const { email, password } = loginData;
+        const validEmail = "lrenoor@gmail.com";
+        const validPassword = "admin123";
+
+        if (email.trim().toLowerCase() === validEmail && password.trim() === validPassword) {
+            setIsLoggedIn(true);
+            localStorage.setItem("isAdminLoggedIn", "true");
+        } else {
+            alert("Invalid email or password. Please try again.");
         }
-    }, [images]);
+    };
 
-    const handleFileChange = (e) => setFile(e.target.files[0]);
+    // ------------------ Logout Handlers ------------------
+    const handleLogout = () => setShowLogoutPopup(true);
+    const confirmLogout = () => {
+        setShowLogoutPopup(false);
+        setIsLoggedIn(false);
+        localStorage.removeItem("isAdminLoggedIn");
+        navigate("/", { replace: true });
+    };
+    const cancelLogout = () => setShowLogoutPopup(false);
 
-    const resizeImage = (file, maxWidth = 800, maxHeight = 600) => {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.onload = () => {
-                    const canvas = document.createElement("canvas");
-                    let width = img.width;
-                    let height = img.height;
+    // ------------------ Property Handlers ------------------
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === "areaSqFt") {
+            const sqFt = value;
+            const cents = sqFt ? (parseFloat(sqFt) / 435.6).toFixed(2) : "";
+            setProperty({ ...property, areaSqFt: value, areaCents: cents });
+        } else if (name === "areaCents") {
+            const cents = value;
+            const sqFt = cents ? (parseFloat(cents) * 435.6).toFixed(2) : "";
+            setProperty({ ...property, areaCents: value, areaSqFt: sqFt });
+        } else {
+            setProperty({ ...property, [name]: value });
+        }
+    };
 
-                    if (width > height) {
-                        if (width > maxWidth) {
-                            height *= maxWidth / width;
-                            width = maxWidth;
-                        }
-                    } else {
-                        if (height > maxHeight) {
-                            width *= maxHeight / height;
-                            height = maxHeight;
-                        }
-                    }
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        if (!files || files.length === 0) return;
+        const file = files[0];
+        setProperty({ ...property, [name]: file });
+        if (name === "image") setImagePreview(URL.createObjectURL(file));
+        if (name === "video") setVideoPreview(URL.createObjectURL(file));
+    };
 
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL("image/jpeg", 0.8));
-                };
-                img.onerror = reject;
-                img.src = e.target.result;
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
+    const handleDrop = (e, type) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (!file) return;
+        if (type === "image") {
+            setProperty({ ...property, image: file });
+            setImagePreview(URL.createObjectURL(file));
+            setDraggingImage(false);
+        } else {
+            setProperty({ ...property, video: file });
+            setVideoPreview(URL.createObjectURL(file));
+            setDraggingVideo(false);
+        }
+    };
+
+    const handleDragOver = (e, type) => {
+        e.preventDefault();
+        if (type === "image") setDraggingImage(true);
+        else setDraggingVideo(true);
+    };
+
+    const handleDragLeave = (type) => {
+        if (type === "image") setDraggingImage(false);
+        else setDraggingVideo(false);
+    };
+
+    const handleReplace = (type) => {
+        if (type === "image") imageRef.current.click();
+        else videoRef.current.click();
+    };
+
+    const handleRemoveFile = (type) => {
+        if (type === "image") {
+            setProperty({ ...property, image: null });
+            setImagePreview(null);
+        } else {
+            setProperty({ ...property, video: null });
+            setVideoPreview(null);
+        }
+    };
+
+    // ------------------ Submit Property ------------------
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (
+            !property.title ||
+            !property.city ||
+            !property.areaSqFt ||
+            !property.areaCents ||
+            !property.price ||
+            !property.features ||
+            !property.image
+        ) {
+            alert("Please fill all mandatory fields and upload an image.");
+            return;
+        }
+
+        const newProperty = {
+            ...property,
+            id: Date.now(),
+            imageURL: property.image ? URL.createObjectURL(property.image) : null,
+            videoURL: property.video ? URL.createObjectURL(property.video) : null,
+        };
+
+        const updatedList = [newProperty, ...propertyList];
+        setPropertyList(updatedList);
+
+        const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+        uploadedImages.push({
+            id: newProperty.id,
+            title: newProperty.title,
+            price: newProperty.price,
+            area: newProperty.areaSqFt + " sq.ft / " + newProperty.areaCents + " cents",
+            location: newProperty.city,
+            image: newProperty.imageURL,
+            video: newProperty.videoURL,
+            features: newProperty.features,
+            description: newProperty.features,
         });
+        localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+
+        window.dispatchEvent(new Event("imagesUpdated"));
+
+        setShowSuccessToast(true);
+        setTimeout(() => setShowSuccessToast(false), 2500);
+
+        setProperty({
+            title: "",
+            city: "Kurnool",
+            areaSqFt: "",
+            areaCents: "",
+            price: "",
+            features: "",
+            image: null,
+            video: null,
+        });
+        setImagePreview(null);
+        setVideoPreview(null);
     };
 
-    const handleAdd = async () => {
-        setError("");
-        if (!file) return setError("⚠️ Please select an image");
-        if (!title || !location || !area || !price || !features)
-            return setError("⚠️ Fill all fields");
+    // ------------------ Remove Property ------------------
+    const handleRemoveProperty = (id) => {
+        const updatedList = propertyList.filter((item) => item.id !== id);
+        setPropertyList(updatedList);
 
-        try {
-            const resized = await resizeImage(file);
+        const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+        const filteredImages = uploadedImages.filter((img) => img.id !== id);
+        localStorage.setItem("uploadedImages", JSON.stringify(filteredImages));
 
-            // Add tag based on location
-            let tag = "";
-            if (location === "Kurnool") tag = "knl";
-            else if (location === "Hyderabad") tag = "hyd";
-
-            const newImage = {
-                id: Date.now(),
-                url: resized,
-                title,
-                location,
-                area,
-                price,
-                features,
-                tag,
-            };
-
-            const updatedImages = [newImage, ...images];
-            setImages(updatedImages);
-            setVisibleCount((prev) => prev + 1);
-
-            setShowSuccess(true);
-            setTimeout(() => setShowSuccess(false), 1500);
-
-            window.dispatchEvent(new Event("imagesUpdated"));
-
-            // Reset form
-            setFile(null);
-            setTitle("");
-            setLocation("");
-            setArea("");
-            setPrice("");
-            setFeatures("");
-            document.getElementById("fileInput").value = null;
-        } catch (err) {
-            console.error("Error processing image:", err);
-            setError("⚠️ Could not process the image. Try another file.");
-        }
-    };
-
-    const handleDelete = (index) => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this image?");
-        if (!confirmDelete) return;
-        const updated = images.filter((_, i) => i !== index);
-        setImages(updated);
-        setVisibleCount((prev) => Math.min(prev, updated.length));
         window.dispatchEvent(new Event("imagesUpdated"));
     };
 
-    const openExpand = (img) => {
-        setExpandedImage(img);
-        document.body.style.overflow = "hidden";
-    };
-
-    const closeExpand = () => {
-        setExpandedImage(null);
-        document.body.style.overflow = "auto";
-    };
-
-    const loadMore = () => setVisibleCount((prev) => prev + 12);
-
-    const handleLogout = () => {
-        setShowLogoutPopup(true);
-    };
-
-    const confirmLogout = () => {
-        setIsLoggedIn(false);
-        setAdminEmail("");
-        setAdminPassword("");
-        setShowLogoutPopup(false);
-        window.location.href = "/";
-    };
-
-    const cancelLogout = () => setShowLogoutPopup(false);
-
-    const handleHome = () => {
-        if (!isLoggedIn) {
-            alert("⚠️ You must logout first to go to Home");
-            return;
-        }
-        window.location.href = "/";
-    };
-
-    const handleAdminLogin = () => {
-        if (adminEmail === "lrenoor@gmail.com" && adminPassword === "admin123") {
-            setIsLoggedIn(true);
-            alert("✅ Admin logged in successfully!");
-        } else {
-            alert("❌ Invalid email or password");
-        }
-    };
-
-    return (
-        <div className="gallery-wrapper">
-            {!isLoggedIn ? (
-                <div className="admin-login">
+    // ------------------ Login Screen ------------------
+    if (!isLoggedIn) {
+        return (
+            <div className="admin-login-container">
+                <form className="admin-login-form" onSubmit={handleLogin}>
                     <h2>Admin Login</h2>
                     <input
                         type="email"
                         placeholder="Email"
-                        value={adminEmail}
-                        onChange={(e) => setAdminEmail(e.target.value)}
+                        value={loginData.email}
+                        onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                        required
                     />
-                    <div className="password-group">
-                        <input
-                            type={passwordVisible ? "text" : "password"}
-                            placeholder="Password"
-                            value={adminPassword}
-                            onChange={(e) => setAdminPassword(e.target.value)}
-                        />
-                        <span
-                            className="password-toggle"
-                            onClick={() => setPasswordVisible(!passwordVisible)}
-                        >
-                            {passwordVisible ? "👁️‍🗨️" : "👁️"}
-                        </span>
-                    </div>
-                    <button onClick={handleAdminLogin}>Login</button>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={loginData.password}
+                        onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                        required
+                    />
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        );
+    }
+
+    // ------------------ Admin Panel ------------------
+    return (
+        <div className="admin-wrapper">
+            <header className="admin-header">
+                <h2>🏠 Admin Property Upload</h2>
+                <div className="greeting">{greeting}, Admin!</div>
+                <div className="admin-buttons">
+                    <button onClick={() => navigate("/")}>Home</button>
+                    <button onClick={handleLogout}>Logout</button>
                 </div>
-            ) : (
-                <>
-                    <div className="admin-actions">
-                        <button onClick={handleLogout}>Logout</button>
-                        <button onClick={handleHome}>Home</button>
-                    </div>
+            </header>
 
-                    <h1 className="gallery-heading">📸 LRE - Upload Property Images</h1>
-                    <div className="gallery-instructions">
-                        1️⃣ Select an image <br />
-                        2️⃣ Fill Title, Location, Area, Price, Features <br />
-                        3️⃣ Click “Add Image” to upload
-                    </div>
+            <section className="admin-guidelines">
+                <h3>📋 Instructions for Admin:</h3>
+                <ul>
+                    <li>Upload a clear property image (JPG/PNG) using drag & drop or click to select.</li>
+                    <li>Optionally add a property walkthrough video.</li>
+                    <li>Fill all fields carefully before submission.</li>
+                    <li>Click <b>Add Property</b> to add to the list below.</li>
+                    <li>You can remove any added property using the remove button.</li>
+                </ul>
+            </section>
 
-                    <div className="gallery-upload">
+            <form className="admin-form" onSubmit={handleSubmit}>
+                <div className="form-grid">
+                    <div className="form-group">
+                        <label>Property Title:</label>
                         <input
-                            id="fileInput"
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
+                            type="text"
+                            name="title"
+                            value={property.title}
+                            onChange={handleChange}
+                            required
+                            placeholder="Enter property title"
                         />
-                        <input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                        <select value={location} onChange={(e) => setLocation(e.target.value)}>
-                            <option value="">Select Location</option>
+                    </div>
+
+                    <div className="form-group">
+                        <label>City:</label>
+                        <select name="city" value={property.city} onChange={handleChange} required>
                             <option value="Kurnool">Kurnool</option>
                             <option value="Hyderabad">Hyderabad</option>
                         </select>
-                        <input placeholder="Area" value={area} onChange={(e) => setArea(e.target.value)} />
-                        <input placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
-                        <input placeholder="Features" value={features} onChange={(e) => setFeatures(e.target.value)} />
-                        <button onClick={handleAdd}>➕ Add Image</button>
-                        {error && <div className="gallery-error">{error}</div>}
                     </div>
 
-                    <div className="gallery-grid">
-                        {images.length === 0 && <div className="no-images">No images uploaded yet.</div>}
+                    <div className="area-wrapper">
+                        <div className="form-group">
+                            <label>Area (sq.ft):</label>
+                            <input
+                                type="number"
+                                name="areaSqFt"
+                                value={property.areaSqFt}
+                                onChange={handleChange}
+                                placeholder="Enter area in sq.ft"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Area (Cents):</label>
+                            <input
+                                type="number"
+                                name="areaCents"
+                                value={property.areaCents}
+                                onChange={handleChange}
+                                placeholder="Enter area in cents"
+                                required
+                            />
+                        </div>
+                    </div>
 
-                        {images.slice(0, visibleCount).map((img, i) => (
-                            <div
-                                key={img.id}
-                                className={`gallery-card ${hoverIndex === i ? "hovered" : ""}`}
-                                onMouseEnter={() => setHoverIndex(i)}
-                                onMouseLeave={() => setHoverIndex(-1)}
-                                onClick={() => openExpand(img)}
-                            >
-                                <div className="card-left">
-                                    <img src={img.url} alt={img.title} className="card-image" />
-                                    <div className="card-info">
-                                        <p><strong>📍 Location:</strong> {img.location}</p>
-                                        <p><strong>📏 Area:</strong> {img.area}</p>
-                                        <p><strong>💰 Price:</strong> {img.price}</p>
-                                        <p>
-                                            <strong>🏷️ Tag:</strong>{" "}
-                                            <span className={`tag ${img.tag}`}>{img.tag}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="card-right">
-                                    <h3>{img.title}</h3>
-                                    <p><strong>⭐ Features:</strong> {img.features}</p>
-                                </div>
-                                <button
-                                    className="remove-btn"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDelete(i);
-                                    }}
-                                >
-                                    ✕
+                    <div className="form-group">
+                        <label>Price (₹):</label>
+                        <input
+                            type="number"
+                            name="price"
+                            value={property.price}
+                            onChange={handleChange}
+                            required
+                            placeholder="Enter property price"
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label>Features:</label>
+                    <textarea
+                        name="features"
+                        value={property.features}
+                        onChange={handleChange}
+                        placeholder="Enter property features"
+                        rows="3"
+                        required
+                    />
+                </div>
+
+                {/* Image Upload */}
+                <div
+                    className={`drag-drop ${draggingImage ? "dragging" : ""}`}
+                    onDrop={(e) => handleDrop(e, "image")}
+                    onDragOver={(e) => handleDragOver(e, "image")}
+                    onDragLeave={() => handleDragLeave("image")}
+                    onClick={() => imageRef.current.click()}
+                >
+                    {imagePreview ? (
+                        <div>
+                            <img
+                                src={imagePreview}
+                                alt="Preview"
+                                style={{ maxHeight: "150px", borderRadius: "8px" }}
+                            />
+                            <div style={{ marginTop: "8px" }}>
+                                <button type="button" className="replace-btn" onClick={() => handleReplace("image")}>
+                                    Replace
                                 </button>
+                                <button
+                                    type="button"
+                                    className="remove-btn"
+                                    onClick={() => handleRemoveFile("image")}
+                                    style={{ marginLeft: "8px" }}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <p>Drag & drop property image here or click to select</p>
+                    )}
+                    <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        ref={imageRef}
+                        onChange={handleFileChange}
+                        required
+                    />
+                </div>
+
+                {/* Video Upload (Optional) */}
+                <div
+                    className={`drag-drop ${draggingVideo ? "dragging" : ""}`}
+                    onDrop={(e) => handleDrop(e, "video")}
+                    onDragOver={(e) => handleDragOver(e, "video")}
+                    onDragLeave={() => handleDragLeave("video")}
+                    onClick={() => videoRef.current.click()}
+                >
+                    {videoPreview ? (
+                        <div>
+                            <video
+                                src={videoPreview}
+                                controls
+                                style={{ maxHeight: "200px", borderRadius: "8px" }}
+                            />
+                            <div style={{ marginTop: "8px" }}>
+                                <button type="button" className="replace-btn" onClick={() => handleReplace("video")}>
+                                    Replace
+                                </button>
+                                <button
+                                    type="button"
+                                    className="remove-btn"
+                                    onClick={() => handleRemoveFile("video")}
+                                    style={{ marginLeft: "8px" }}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <p>Drag & drop property video here or click to select (optional)</p>
+                    )}
+                    <input type="file" name="video" accept="video/*" ref={videoRef} onChange={handleFileChange} />
+                </div>
+
+                <button type="submit" className="submit-btn">
+                    ➕ Add Property
+                </button>
+            </form>
+
+            {/* Property List */}
+            <section className="property-preview-section">
+                <h3>🏘️ Added Properties</h3>
+                {propertyList.length === 0 ? (
+                    <p className="no-properties">No properties added yet.</p>
+                ) : (
+                    <div className="property-grid">
+                        {propertyList.map((item) => (
+                            <div key={item.id} className="property-card">
+                                {item.imageURL && <img src={item.imageURL} alt={item.title} className="property-img" />}
+                                <div className="property-info">
+                                    <div className={`property-tag ${item.city === "Kurnool" ? "kurnool" : "hyderabad"}`}>
+                                        {item.city}
+                                    </div>
+                                    <h4>{item.title}</h4>
+                                    <p>
+                                        <b>Area:</b> {item.areaSqFt} sq.ft ({item.areaCents} cents)
+                                    </p>
+                                    <p>
+                                        <b>Price:</b> ₹{item.price}
+                                    </p>
+                                    <p>
+                                        <b>Features:</b> {item.features}
+                                    </p>
+                                    {item.videoURL && <video src={item.videoURL} controls className="property-video" />}
+                                    <button
+                                        className="remove-btn"
+                                        style={{ marginTop: "8px" }}
+                                        onClick={() => handleRemoveProperty(item.id)}
+                                    >
+                                        Remove Property
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
+                )}
+            </section>
 
-                    {visibleCount < images.length && (
-                        <button className="load-more-btn" onClick={loadMore}>
-                            ⬇️ Load More
-                        </button>
-                    )}
-
-                    {expandedImage && (
-                        <div className="modal-overlay" onClick={closeExpand}>
-                            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                                <button className="modal-close" onClick={closeExpand}>✕</button>
-                                <img src={expandedImage.url} alt={expandedImage.title} className="modal-image" />
-                                <div className="modal-details">
-                                    <h2>{expandedImage.title}</h2>
-                                    <p><strong>📍 Location:</strong> {expandedImage.location}</p>
-                                    <p><strong>📏 Area:</strong> {expandedImage.area}</p>
-                                    <p><strong>💰 Price:</strong> {expandedImage.price}</p>
-                                    <p><strong>⭐ Features:</strong> {expandedImage.features}</p>
-                                    <p>
-                                        <strong>🏷️ Tag:</strong>{" "}
-                                        <span className={`tag ${expandedImage.tag}`}>{expandedImage.tag}</span>
-                                    </p>
-                                </div>
-                            </div>
+            {/* Logout Confirmation Popup */}
+            {showLogoutPopup && (
+                <div className="popup-overlay">
+                    <div className="popup">
+                        <p>Are you sure you want to logout?</p>
+                        <div className="popup-buttons">
+                            <button onClick={cancelLogout}>Stay</button>
+                            <button onClick={confirmLogout}>Logout</button>
                         </div>
-                    )}
-
-                    {showSuccess && <div className="success-popup"></div>}
-
-                    {showLogoutPopup && (
-                        <div className="logout-popup-overlay">
-                            <div className="logout-popup">
-                                <h3>Are you sure you want to logout?</h3>
-                                <div className="logout-popup-buttons">
-                                    <button className="logout-btn" onClick={confirmLogout}>Logout</button>
-                                    <button className="stay-btn" onClick={cancelLogout}>Stay</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </>
+                    </div>
+                </div>
             )}
+
+            {/* Animated Success Toast */}
+            {showSuccessToast && <div className="success-toast">✅ Property added successfully!</div>}
         </div>
     );
-}
+};
+
+export default Admin;

@@ -1,496 +1,361 @@
-/* ========================== GENERAL WRAPPER ========================== */
-.gallery-wrapper {
+/* ---------------- GENERAL WRAPPER ---------------- */
+.admin-wrapper {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
     color: #333;
     background: #f5f7fa;
-    min-height: 100vh;
 }
 
-/* ========================== ADMIN LOGIN ========================== */
-.admin-login {
+/* ---------------- HEADER ---------------- */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-header h2 {
+    font-size: 24px;
+    color: #1e3a8a;
+}
+
+.greeting {
+    font-size: 18px;
+    color: #111827;
+}
+
+.admin-buttons button {
+    padding: 8px 16px;
+    margin-left: 8px;
+    border: none;
+    background: #3b82f6;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.admin-buttons button:hover {
+    background: #2563eb;
+}
+
+/* ---------------- LOGIN ---------------- */
+.admin-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: #e0e7ff;
+}
+
+.admin-login-form {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.admin-login-form h2 {
+    margin-bottom: 20px;
+    color: #1e3a8a;
+    text-align: center;
+}
+
+.admin-login-form input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+}
+
+.admin-login-form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.admin-login-form button:hover {
+    background: #2563eb;
+}
+
+/* ---------------- GUIDELINES ---------------- */
+.admin-guidelines {
+    background: #e0f2fe;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.admin-guidelines h3 {
+    color: #1e40af;
+    margin-bottom: 10px;
+}
+
+.admin-guidelines ul {
+    margin-left: 20px;
+}
+
+.admin-guidelines li {
+    margin-bottom: 8px;
+}
+
+/* ---------------- FORM ---------------- */
+.admin-form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.form-group {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    padding: 50px 40px;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-    max-width: 420px;
-    margin: 80px auto;
-    transition: all 0.3s ease;
 }
 
-.admin-login h2 {
-    margin-bottom: 20px;
-    color: #0d6efd;
-    font-size: 28px;
-    font-weight: 600;
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 6px;
 }
 
-.admin-login input {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    transition: all 0.3s ease;
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
 }
 
-.admin-login input:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
-    outline: none;
+textarea {
+    resize: none;
 }
 
-.admin-login button {
-    width: 100%;
-    padding: 14px;
-    background: #198754;
-    color: #fff;
-    font-weight: 600;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.admin-login button:hover {
-    background: #157347;
-}
-
-/* ========================== ADMIN ACTIONS ========================== */
-.admin-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-bottom: 25px;
-}
-
-.admin-actions button {
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: none;
-    background: #0d6efd;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.admin-actions button:hover {
-    background: #0b5ed7;
-}
-
-/* ========================== GALLERY UPLOAD ========================== */
-.gallery-heading {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 15px;
-    color: #0d6efd;
-    font-weight: 600;
-}
-
-.gallery-instructions {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #555;
-    font-size: 16px;
-}
-
-.gallery-upload {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.gallery-upload input,
-.gallery-upload select {
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
-
-.gallery-upload input:focus,
-.gallery-upload select:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
-    outline: none;
-}
-
-.gallery-upload button {
-    padding: 12px 22px;
-    border-radius: 10px;
-    border: none;
-    background: #198754;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.gallery-upload button:hover {
-    background: #157347;
-}
-
-.gallery-error {
-    color: #dc3545;
-    font-weight: bold;
-    width: 100%;
-    text-align: center;
-    margin-top: 8px;
-}
-
-/* ========================== GALLERY GRID ========================== */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.gallery-card {
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    display: flex;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.gallery-card.hovered {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
-}
-
-.card-left,
-.card-right {
-    padding: 12px;
-}
-
-.card-left {
-    flex: 1;
-}
-
-.card-left img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
+/* ---------------- DRAG & DROP ---------------- */
+.drag-drop {
+    margin-top: 15px;
+    padding: 25px;
+    border: 2px dashed #3b82f6;
     border-radius: 12px;
-    margin-bottom: 10px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #f0f9ff;
 }
 
-.gallery-card:hover .card-left img {
-    transform: scale(1.06);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+.drag-drop.dragging {
+    border-color: #2563eb;
+    background: #e0f2fe;
 }
 
-.card-right {
-    flex: 1;
-    transition: transform 0.4s ease;
+.drag-drop img,
+.drag-drop video {
+    max-width: 100%;
+    border-radius: 8px;
 }
 
-.gallery-card:hover .card-right {
-    transform: translateX(-6px);
+.replace-btn,
+.remove-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.card-right h3 {
-    margin: 0 0 8px 0;
-    font-size: 18px;
-    color: #0d6efd;
+.replace-btn {
+    background: #10b981;
+    color: white;
+}
+
+.replace-btn:hover {
+    background: #059669;
 }
 
 .remove-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(220, 53, 69, 0.85);
-    border: none;
+    background: #ef4444;
     color: white;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .remove-btn:hover {
-    background: rgba(220, 53, 69, 1);
+    background: #b91c1c;
 }
 
-.load-more-btn {
-    padding: 14px 28px;
-    margin: 25px auto;
-    display: block;
+.submit-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #3b82f6;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
     border-radius: 10px;
-    border: none;
-    background: #0d6efd;
-    color: white;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
-.load-more-btn:hover {
-    background: #0b5ed7;
+.submit-btn:hover {
+    background: #2563eb;
 }
 
-.no-images {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
+/* ---------------- PROPERTY LIST ---------------- */
+.property-preview-section {
+    margin-top: 30px;
 }
 
-/* ========================== MODAL ========================== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+}
+
+.property-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.property-card:hover {
+    transform: translateY(-3px);
+}
+
+.property-img {
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    height: 150px;
+    object-fit: cover;
 }
 
-.modal-content {
-    background: #fff;
-    border-radius: 16px;
-    padding: 25px;
-    max-width: 720px;
-    width: 95%;
-    position: relative;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+.property-info {
+    padding: 12px 14px;
 }
 
-.modal-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #dc3545;
-    border: none;
-    color: white;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.modal-image {
-    width: 100%;
-    border-radius: 14px;
-    margin-bottom: 18px;
-}
-
-.modal-details h2 {
-    margin: 0 0 12px 0;
-    color: #0d6efd;
-}
-
-/* ========================== SUCCESS POPUP ========================== */
-.success-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 60px;
-    height: 60px;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    pointer-events: none;
-}
-
-.success-popup::before,
-.success-popup::after {
-    content: "";
-    position: absolute;
-    background-color: #198754;
-    border-radius: 4px;
-    opacity: 1;
-    box-shadow: 0 0 12px #198754, 0 0 20px #198754;
-}
-
-.success-popup::before {
-    width: 0;
-    height: 6px;
-    top: 27px;
-    left: 0;
-    transform: rotate(45deg);
-    animation: swipe-long 0.5s forwards, fade-scale 1s forwards 0.5s;
-}
-
-.success-popup::after {
-    width: 0;
-    height: 6px;
-    top: 27px;
-    left: 0;
-    transform: rotate(-45deg);
-    animation: swipe-short 0.5s forwards 0.2s, fade-scale 1s forwards 0.7s;
-}
-
-@keyframes swipe-long {
-    0% {
-        width: 0;
-    }
-
-    100% {
-        width: 35px;
-    }
-}
-
-@keyframes swipe-short {
-    0% {
-        width: 0;
-    }
-
-    100% {
-        width: 20px;
-    }
-}
-
-@keyframes fade-scale {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(1.6);
-    }
-}
-
-/* ========================== TAG STYLING ========================== */
-.tag {
+.property-tag {
+    display: inline-block;
     padding: 3px 8px;
     border-radius: 6px;
     font-size: 12px;
     color: white;
-    text-transform: uppercase;
-    font-weight: 600;
-    display: inline-block;
-    margin-top: 5px;
+    margin-bottom: 6px;
 }
 
-.tag.knl {
-    background-color: #198754;
+.property-tag.kurnool {
+    background: #3b82f6;
 }
 
-/* Kurnool → green */
-.tag.hyd {
-    background-color: #0d6efd;
+.property-tag.hyderabad {
+    background: #10b981;
 }
 
-/* Hyderabad → blue */
-/* ========================== PASSWORD TOGGLE ========================== */
-.password-group {
-    position: relative;
+.property-video {
     width: 100%;
+    margin-top: 8px;
+    border-radius: 8px;
 }
 
-.password-toggle {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 18px;
-    color: #555;
-    transition: color 0.3s ease;
-}
-
-.password-toggle:hover {
-    color: #0d6efd;
-}
-
-/* ========================== LOGOUT POPUP ========================== */
-.logout-popup-overlay {
+/* ---------------- POPUPS ---------------- */
+.popup-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.65);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10000;
+    z-index: 9999;
 }
 
-.logout-popup {
+.popup {
     background: #fff;
-    border-radius: 16px;
-    padding: 30px 25px;
-    max-width: 400px;
-    width: 90%;
+    padding: 25px 30px;
+    border-radius: 12px;
     text-align: center;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-    animation: popupFadeIn 0.3s ease forwards;
+    max-width: 400px;
+    width: 100%;
 }
 
-.logout-popup h3 {
-    margin-bottom: 25px;
-    font-size: 20px;
-    color: #0d6efd;
-}
-
-.logout-popup-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.logout-popup-buttons button {
-    padding: 10px 22px;
-    border-radius: 10px;
-    font-weight: 600;
+.popup-buttons button {
+    margin: 10px 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
-    font-size: 15px;
-    transition: all 0.3s ease;
 }
 
-.logout-popup-buttons .logout-btn {
-    background: #dc3545;
-    color: #fff;
+.popup-buttons button:first-child {
+    background: #9ca3af;
+    color: white;
 }
 
-.logout-popup-buttons .logout-btn:hover {
-    background: #b02a37;
+.popup-buttons button:last-child {
+    background: #ef4444;
+    color: white;
 }
 
-.logout-popup-buttons .stay-btn {
-    background: #0d6efd;
-    color: #fff;
+.popup-buttons button:first-child:hover {
+    background: #6b7280;
 }
 
-.logout-popup-buttons .stay-btn:hover {
-    background: #0b5ed7;
+.popup-buttons button:last-child:hover {
+    background: #b91c1c;
 }
 
-/* ========================== ANIMATION ========================== */
-@keyframes popupFadeIn {
+/* ---------------- TOAST ---------------- */
+.success-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #10b981;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeInOut 2.5s forwards;
+    z-index: 999;
+}
+
+@keyframes fadeInOut {
     0% {
-        transform: scale(0.8);
         opacity: 0;
+        transform: translateY(20px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     100% {
-        transform: scale(1);
-        opacity: 1;
+        opacity: 0;
+        transform: translateY(20px);
     }
 }
