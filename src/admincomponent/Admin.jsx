@@ -3,12 +3,21 @@ import { useNavigate } from "react-router-dom";
 import "../admincomponent/Admindesigin.css";
 import { addData } from "../service/Addlist";
 
+
+
+
+
 const Admin = () => {
+
+
+
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+
+ 
 
   const [property, setProperty] = useState({
     title: "",
@@ -55,6 +64,7 @@ const Admin = () => {
   // Login handlers
   const handleLogin = (e) => {
     e.preventDefault();
+
     if (
       loginData.email.trim().toLowerCase() === "lrenoor@gmail.com" &&
       loginData.password.trim() === "admin123"
@@ -151,8 +161,7 @@ const Admin = () => {
           videoURL: response.data.videoUrl,
         };
 
-        console.log(response.data)
-
+       
         setPropertyList([newProperty, ...propertyList]);
 
         const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];

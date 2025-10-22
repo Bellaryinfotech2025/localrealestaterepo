@@ -5,6 +5,11 @@ import image2 from "../assets/spacecity .jpg";
 import image3 from "../assets/mangopardise.jpg";
 import image4 from "../assets/vayuputra.jpg";
 
+
+import {fetchRecords} from "../service/Addlist";
+
+
+
 const Lrecustomerselection = () => {
   const [activeTab, setActiveTab] = useState("Kurnool");
   const [uploadedImages, setUploadedImages] = useState([]);
@@ -17,51 +22,89 @@ const Lrecustomerselection = () => {
 
   const tabs = ["Kurnool", "Hyderabad"];
 
-  const realEstateData = {
-    Kurnool: [
-      {
-        id: 1,
-        title: "SMART CITY",
-        price: "₹6,00,000",
-        area: "3 CENTS 30×44",
-        location: "Kalva Bugga, Orvakal, Kurnool",
-        image: image1,
-        description:
-          "In 450 mts nearby DRDO, AP Gurukula School, NH40 — perfect investment opportunity.",
-      },
-      {
-        id: 2,
-        title: "SPACE CITY",
-        price: "₹6,00,000",
-        area: "3 CENTS 30×44",
-        location: "Near H8 Dabba, Nannur, Kurnool",
-        image: image2,
-        description:
-          "Close to Airport & Orvakal Industrial Hub, excellent road connectivity.",
-      },
-      {
-        id: 3,
-        title: "MANGO PARADISE",
-        price: "₹6,00,000",
-        area: "5 CENTS 30×48",
-        location: "Guttapadu, Orvakal, Kurnool",
-        image: image3,
-        description:
-          "Green surroundings with easy access to Kurnool–Thippayapalli road.",
-      },
-      {
-        id: 4,
-        title: "VAYUPUTRA TOWNSHIP II",
-        price: "₹6,00,000",
-        area: "5 CENTS 30×40",
-        location: "Guttapadu, Kurnool",
-        image: image4,
-        description:
-          "100% vastu, CC roads, clear title, well-developed and peaceful area.",
-      },
-    ],
-    Hyderabad: [],
-  };
+    const [data,setData]=useState([]);
+
+
+     // fetching records 
+
+     
+    
+      const fetchrecords=async()=>{
+    
+           try{
+              const response =await fetchRecords();
+               setData(response.data);
+    
+               if(response.status===200){
+    
+                console.log("records fetched successfully");
+               
+               }
+           }catch(error){
+    
+             console.log("Error fetching records:", error); 
+    
+             throw error;
+           }
+    
+            
+                   
+                        
+      }
+    
+      useEffect(()=>{
+    
+            fetchrecords();   
+            console.log(data)
+         
+    
+      },[])
+
+  // const realEstateData = {
+  //   Kurnool: [
+  //     {
+  //       id: 1,
+  //       title: "SMART CITY",
+  //       price: "₹6,00,000",
+  //       area: "3 CENTS 30×44",
+  //       location: "Kalva Bugga, Orvakal, Kurnool",
+  //       image: image1,
+  //       description:
+  //         "In 450 mts nearby DRDO, AP Gurukula School, NH40 — perfect investment opportunity.",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "SPACE CITY",
+  //       price: "₹6,00,000",
+  //       area: "3 CENTS 30×44",
+  //       location: "Near H8 Dabba, Nannur, Kurnool",
+  //       image: image2,
+  //       description:
+  //         "Close to Airport & Orvakal Industrial Hub, excellent road connectivity.",
+  //     },
+  //     {
+  //       id: 3,
+  //       title: "MANGO PARADISE",
+  //       price: "₹6,00,000",
+  //       area: "5 CENTS 30×48",
+  //       location: "Guttapadu, Orvakal, Kurnool",
+  //       image: image3,
+  //       description:
+  //         "Green surroundings with easy access to Kurnool–Thippayapalli road.",
+  //     },
+  //     {
+  //       id: 4,
+  //       title: "VAYUPUTRA TOWNSHIP II",
+  //       price: "₹6,00,000",
+  //       area: "5 CENTS 30×40",
+  //       location: "Guttapadu, Kurnool",
+  //       image: image4,
+  //       description:
+  //         "100% vastu, CC roads, clear title, well-developed and peaceful area.",
+  //     },
+  //   ],
+  //   Hyderabad: [],
+  // };
 
   // ------------------ GREETING ------------------
   const updateGreeting = () => {
@@ -198,7 +241,7 @@ const Lrecustomerselection = () => {
 
         {/* PROPERTY GRID */}
         <div className="property-grid">
-          {getCurrentProperties().map((property) => (
+          {data.map((property) => (
             <div
               key={property.id}
               className="property-card"
@@ -207,11 +250,19 @@ const Lrecustomerselection = () => {
               <div className="property-flex">
                 <div className="property-left">
                   <div className="image-wrapper">
-                    <img
-                      src={property.image || property.imageURL}
+                    {/* <img
+                      src={property.imageURL}
                       alt={property.title}
-                      className="property-image"
-                    />
+                      
+                    /> */}
+
+                    {/* <img src={`http://localhost:8080/${property.imageUrl}L}`} alt="something went wrong" /> */}
+
+                    {/* <img src="http://localhost:8080/api/files/view/image/1761149549115_heroimage.png" alt="" /> */}
+
+                    <img src={`http://localhost:8080${property.imageUrl}`} alt={property.title} className="property-image" />
+
+                  
                   </div>
                   <div className="property-info-box">
                     <p>

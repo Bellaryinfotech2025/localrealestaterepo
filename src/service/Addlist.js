@@ -15,4 +15,41 @@ export const addData = async (formData) => {
     console.error("Error uploading data:", error);
     throw error; // throw to handle it in React
   }
+
+
+
 };
+
+
+export const fetchRecords=async()=>{
+
+       try{
+
+                       const response=await axios.get("http://localhost:8080/api/files/all");
+
+                       return response;
+       }catch(error){
+
+        console.log("Error fetching records:", error);
+        throw error;
+       }
+
+
+
+
+}
+
+
+export const deleteRecordsById=async(id)=>{
+
+    try{
+               const response=await axios.delete(API_URL+"/"+id)
+
+               return response;
+    }catch(error){
+
+      console.log("error while deleting file");
+      throw error;
+
+   }
+}
