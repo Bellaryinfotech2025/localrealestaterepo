@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import "./landingpagecomponent/landingpagedesign.css";
+import "../landingpagecomponent/landingpagedesign.css";
 
 
 import bgImage1 from "../assets/green.jpg";
