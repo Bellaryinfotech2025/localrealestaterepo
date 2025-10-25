@@ -2,6 +2,8 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8080/api/files/upload";
 
+
+//  inserting data into database 
 export const addData = async (formData) => {
   try {
     // Make POST request with multipart/form-data
@@ -20,7 +22,7 @@ export const addData = async (formData) => {
 
 };
 
-
+//  fetch all data from database 
 export const fetchRecords=async()=>{
 
        try{
@@ -40,10 +42,12 @@ export const fetchRecords=async()=>{
 }
 
 
+// deleteing record from database through id
+
 export const deleteRecordsById=async(id)=>{
 
     try{
-               const response=await axios.delete(API_URL+"/"+id)
+               const response=await axios.delete("http://localhost:8080/api/files/delete"+"/"+id)
 
                return response;
     }catch(error){
