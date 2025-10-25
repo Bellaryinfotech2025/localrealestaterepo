@@ -41,7 +41,7 @@ const Admin = () => {
   const fetchrecords = async () => {
     try {
       const response = await fetchRecords();
-      setData(response.data);
+      setData(response.data || []);
     } catch (error) {
       console.log("Error fetching records:", error);
     }
@@ -60,7 +60,7 @@ const Admin = () => {
         fetchrecords();
       }
     } catch (error) {
-      console.log("Error  while deleting property:");
+      console.log("Error  while deleting property:", error);
       toast.error("Failed to delete property!");
     }
   };
@@ -104,10 +104,10 @@ const Admin = () => {
     if (["areaSqFt", "areaCents", "price"].includes(name)) {
       const sanitizedValue = parseFloat(value) || 0;
       if (name === "areaSqFt") {
-        const cents = (sanitizedValue / 435.6).toFixed(2);
+        const cents = parseFloat((sanitizedValue / 435.6).toFixed(2));
         setProperty({ ...property, areaSqFt: sanitizedValue, areaCents: cents });
       } else if (name === "areaCents") {
-        const sqFt = (sanitizedValue * 435.6).toFixed(2);
+        const sqFt = parseFloat((sanitizedValue * 435.6).toFixed(2));
         setProperty({ ...property, areaCents: sanitizedValue, areaSqFt: sqFt });
       } else setProperty({ ...property, [name]: sanitizedValue });
     } else {
@@ -154,6 +154,8 @@ const Admin = () => {
         setImages([]);
         setImagePreviews([]);
         setVideoPreview(null);
+        if (imageRef.current) imageRef.current.value = "";
+        if (videoRef.current) videoRef.current.value = "";
       }
     } catch (err) {
       console.error("Upload failed:", err);
@@ -204,7 +206,7 @@ const Admin = () => {
         <div className="col-md-2 bg-dark text-white vh-100 d-flex flex-column p-3">
           <div className="mb-4 text-center">
             <h5 className="text-primary">Admin Panel</h5>
-            <small className="text-muted">Mohammed Mahmood</small>
+            
           </div>
 
           <ul className="nav nav-pills flex-column mb-auto">
@@ -244,9 +246,7 @@ const Admin = () => {
                   </div>
                   <div className="col-md-6">
                     <select className="form-select" name="city" value={property.city} onChange={handleChange} required>
-                     
                       <option>Hyderabad</option>
-                      
                       <option>Kurnool</option>
                     </select>
                   </div>
@@ -303,7 +303,15 @@ const Admin = () => {
                     {data.map((prop) => (
                       <tr key={prop.id}>
                         <td>
-                          <img src={`http://195.35.45.56:5858${prop.imageUrl}`} alt={prop.title} style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "5px" }} />
+                          <img
+                            src={
+                              prop.imageUrl.startsWith("http")
+                                ? prop.imageUrl
+                                : `http://195.35.45.56:5858${prop.imageUrl.startsWith("/") ? "" : "/"}${prop.imageUrl}`
+                            }
+                            alt={prop.title}
+                            style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "5px" }}
+                          />
                         </td>
                         <td>{prop.title}</td>
                         <td>{prop.location}</td>
