@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import '../landingpagecomponent/landingpagedesign.css';
+
+import "./landingpagecomponent/landingpagedesign.css";
+
+
 import bgImage1 from "../assets/green.jpg";
 import bgImage2 from "../assets/login.jpg";
 import bgImage3 from "../assets/testomonials.jpg";
