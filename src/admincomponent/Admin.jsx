@@ -244,9 +244,9 @@ const Admin = () => {
                   </div>
                   <div className="col-md-6">
                     <select className="form-select" name="city" value={property.city} onChange={handleChange} required>
-                      <option>Mahabubnagar</option>
+                     
                       <option>Hyderabad</option>
-                      <option>Narayanpet</option>
+                      
                       <option>Kurnool</option>
                     </select>
                   </div>
@@ -303,7 +303,7 @@ const Admin = () => {
                     {data.map((prop) => (
                       <tr key={prop.id}>
                         <td>
-                          <img src={`http://localhost:8080${prop.imageUrl}`} alt={prop.title} style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "5px" }} />
+                          <img src={`http://195.35.45.56:5858${prop.imageUrl}`} alt={prop.title} style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "5px" }} />
                         </td>
                         <td>{prop.title}</td>
                         <td>{prop.location}</td>

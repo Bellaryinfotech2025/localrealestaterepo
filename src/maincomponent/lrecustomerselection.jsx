@@ -159,7 +159,7 @@ const Lrecustomerselection = () => {
           <div key={property.id} className="col-sm-12 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
             <div className="card shadow-sm rounded hover-card w-100" onClick={() => handleCardClick(property)} style={{ cursor: "pointer" }}>
               <img
-                src={property.imageUrl ? `http://localhost:8080${property.imageUrl}` : "/placeholder.jpg"}
+                src={property.imageUrl ? `http://195.35.45.56:5858${property.imageUrl}` : "/placeholder.jpg"}
                 className="card-img-top"
                 alt={property.title}
                 style={{ height: "200px", objectFit: "cover", borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}
@@ -196,7 +196,7 @@ const Lrecustomerselection = () => {
               </div>
               <div className="modal-body">
                 <img
-                  src={selectedCard.imageUrl ? `http://localhost:8080${selectedCard.imageUrl}` : "/placeholder.jpg"}
+                  src={selectedCard.imageUrl ? `http://195.35.45.56:5858${selectedCard.imageUrl}` : "/placeholder.jpg"}
                   className="img-fluid mb-3"
                   alt={selectedCard.title}
                 />
