@@ -12,7 +12,6 @@ const Lrecustomerselection = () => {
   const [showModal, setShowModal] = useState(false);
   const [closingModal, setClosingModal] = useState(false);
   const [greeting, setGreeting] = useState("");
-  const [weather, setWeather] = useState(null);
   const [data, setData] = useState([]);
 
   const tabs = ["All Cities", "Kurnool", "Hyderabad", "Mahabubnagar"];
@@ -46,27 +45,6 @@ const Lrecustomerselection = () => {
     const interval = setInterval(updateGreeting, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // ------------------ Weather ------------------
-  const fetchWeather = async (city) => {
-    try {
-      const apiKey = "10b342b4c70bdb14bba70c32595722bb";
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
-      );
-      const weatherData = await res.json();
-      if (weatherData.cod === 200) {
-        setWeather({ temp: weatherData.main.temp, desc: weatherData.weather[0].description });
-      } else setWeather(null);
-    } catch (err) {
-      console.error("Weather fetch error:", err);
-      setWeather(null);
-    }
-  };
-
-  useEffect(() => {
-    if (activeTab !== "All Cities") fetchWeather(activeTab);
-  }, [activeTab]);
 
   // ------------------ Filtered Properties ------------------
   const getCurrentProperties = () => {
@@ -115,21 +93,12 @@ const Lrecustomerselection = () => {
         ))}
       </div>
 
-      {/* Greeting & Weather */}
-      {activeTab !== "All Cities" && (
-        <div className="d-flex justify-content-between mb-3 flex-wrap">
-          <p className="mb-1">
-            👋 {greeting}, welcome to <b>{activeTab}</b> properties!
-          </p>
-          {weather ? (
-            <p className="mb-1">
-              🌤 {weather.temp}°C — {weather.desc}
-            </p>
-          ) : (
-            <p className="mb-1">Fetching weather...</p>
-          )}
-        </div>
-      )}
+      {/* Greeting */}
+      <div className="d-flex justify-content-center mb-4 flex-wrap">
+        <p className="mb-1">
+          👋 {greeting}, welcome to <b>{activeTab}</b> properties!
+        </p>
+      </div>
 
       {/* Filters centered */}
       <div className="d-flex justify-content-center mb-4 flex-wrap">
