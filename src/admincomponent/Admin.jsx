@@ -60,7 +60,7 @@ const Admin = () => {
         fetchrecords();
       }
     } catch (error) {
-      console.log("Error deleting property:", error);
+      console.log("Error  while deleting property:");
       toast.error("Failed to delete property!");
     }
   };

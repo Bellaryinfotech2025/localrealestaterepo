@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import "../maindesigncomponent/Lrecustomerselectiondesign.css";
 import { fetchRecords } from "../service/Addlist";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../Lrecustomerselectiondesign.css"; // custom styles
 
 const Lrecustomerselection = () => {
   const [activeTab, setActiveTab] = useState("All Cities");
@@ -21,7 +22,6 @@ const Lrecustomerselection = () => {
     try {
       const response = await fetchRecords();
       setData(response.data);
-      console.log(response.data);
       if (response.status === 200) console.log("Records fetched successfully");
     } catch (error) {
       console.log("Error fetching records:", error);
@@ -40,6 +40,7 @@ const Lrecustomerselection = () => {
     else if (hour >= 17 && hour < 21) setGreeting("Good Evening");
     else setGreeting("Good Night");
   };
+
   useEffect(() => {
     updateGreeting();
     const interval = setInterval(updateGreeting, 60 * 1000);
@@ -69,14 +70,12 @@ const Lrecustomerselection = () => {
 
   // ------------------ Filtered Properties ------------------
   const getCurrentProperties = () => {
-    let filtered = [...data]; // start with all properties
+    let filtered = [...data];
 
-    // Filter by city if not "All Cities"
     if (activeTab !== "All Cities") {
       filtered = filtered.filter((p) => p.location === activeTab);
     }
 
-    // Apply area filter
     if (filter === "3") filtered = filtered.filter((p) => (p.area || "").toString().includes("3"));
     if (filter === "5") filtered = filtered.filter((p) => (p.area || "").toString().includes("5"));
 
@@ -99,99 +98,113 @@ const Lrecustomerselection = () => {
   };
 
   return (
-    <div className="real-estate-wrapper">
+    <div className="container mt-4">
       <ToastContainer position="top-right" autoClose={2500} />
-      <div className="real-estate-container">
-        <h1 className="real-estate-main-heading">Find Your Perfect Property</h1>
+      <h1 className="text-center mb-4">Find Your Perfect Property</h1>
 
-        {/* Tabs */}
-        <nav className="real-estate-nav">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              className={`real-estate-tab ${activeTab === tab ? "active" : ""}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </nav>
+      {/* Tabs */}
+      <div className="d-flex justify-content-center mb-3 flex-wrap">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`btn me-2 mb-2 ${activeTab === tab ? "btn-primary" : "btn-outline-primary"}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
-        {/* Greeting & Weather */}
-        {activeTab !== "All Cities" && (
-          <div className="city-info-bar">
-            <p className="greeting-text">
-              👋 {greeting}, welcome to <b>{activeTab}</b> properties!
+      {/* Greeting & Weather */}
+      {activeTab !== "All Cities" && (
+        <div className="d-flex justify-content-between mb-3 flex-wrap">
+          <p className="mb-1">
+            👋 {greeting}, welcome to <b>{activeTab}</b> properties!
+          </p>
+          {weather ? (
+            <p className="mb-1">
+              🌤 {weather.temp}°C — {weather.desc}
             </p>
-            {weather ? (
-              <p className="weather-text">
-                🌤 {weather.temp}°C — {weather.desc}
-              </p>
-            ) : (
-              <p className="weather-text">Fetching weather...</p>
-            )}
-          </div>
-        )}
-
-        {/* Filters */}
-        <div className="filter-section">
-          <span className={`filter-chip ${filter === "all" ? "active-chip" : ""}`} onClick={() => setFilter("all")}>
-            All
-          </span>
-          <span className={`filter-chip ${filter === "3" ? "active-chip" : ""}`} onClick={() => setFilter("3")}>
-            3 Cents
-          </span>
-          <span className={`filter-chip ${filter === "5" ? "active-chip" : ""}`} onClick={() => setFilter("5")}>
-            5 Cents
-          </span>
+          ) : (
+            <p className="mb-1">Fetching weather...</p>
+          )}
         </div>
+      )}
 
-        {/* Properties */}
-        <div className="property-grid">
-          {getCurrentProperties().map((property) => (
-            <div key={property.id} className="property-card" onClick={() => handleCardClick(property)}>
-              <div className="image-wrapper">
-                <img
-                  src={property.imageUrl ? `http://localhost:8080${property.imageUrl}` : "/placeholder.jpg"}
-                  alt={property.title}
-                  className="property-image"
-                />
-              </div>
-              <div className="property-info-box">
-                <h3 className="property-title">{property.title}</h3>
-                <p><strong>Location:</strong> {property.location}</p>
-                <p><strong>Area:</strong> {property.area}</p>
-                <p><strong>Price:</strong> ₹{property.price}</p>
-                <p className="property-description">{property.description || property.features}</p>
+      {/* Filters centered */}
+      <div className="d-flex justify-content-center mb-4 flex-wrap">
+        <button
+          className={`btn me-2 mb-2 ${filter === "all" ? "btn-success" : "btn-outline-success"}`}
+          onClick={() => setFilter("all")}
+        >
+          All
+        </button>
+        <button
+          className={`btn me-2 mb-2 ${filter === "3" ? "btn-success" : "btn-outline-success"}`}
+          onClick={() => setFilter("3")}
+        >
+          3 Cents
+        </button>
+        <button
+          className={`btn me-2 mb-2 ${filter === "5" ? "btn-success" : "btn-outline-success"}`}
+          onClick={() => setFilter("5")}
+        >
+          5 Cents
+        </button>
+      </div>
+
+      {/* Properties */}
+      <div className="row">
+        {getCurrentProperties().map((property) => (
+          <div key={property.id} className="col-sm-12 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+            <div className="card shadow-sm rounded hover-card w-100" onClick={() => handleCardClick(property)} style={{ cursor: "pointer" }}>
+              <img
+                src={property.imageUrl ? `http://localhost:8080${property.imageUrl}` : "/placeholder.jpg"}
+                className="card-img-top"
+                alt={property.title}
+                style={{ height: "200px", objectFit: "cover", borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}
+              />
+              <div className="card-body d-flex flex-column">
+                <h5 className="card-title">{property.title}</h5>
+                <p className="mb-1"><strong>Location:</strong> {property.location}</p>
+                <p className="mb-1"><strong>Area:</strong> {property.area} Cents</p>
+                <p className="mb-1"><strong>Price:</strong> ₹{property.price}</p>
+                <p className="card-text flex-grow-1">{property.description || property.features}</p>
                 <a
                   href={`https://wa.me/917013438163?text=Hey I want to know more about ${property.title}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="view-details-btn"
+                  className="btn btn-primary mt-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   Contact Us
                 </a>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       {/* Modal */}
       {selectedCard && (
-        <div className={`fullscreen-modal ${showModal ? "show" : ""} ${closingModal ? "closing" : ""}`} onClick={handleCloseModal}>
-          <div className="fullscreen-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-fullscreen" onClick={handleCloseModal}>&times;</button>
-            <div className="modal-image-wrapper">
-              <img src={selectedCard.imageUrl ? `http://localhost:8080${selectedCard.imageUrl}` : "/placeholder.jpg"} alt={selectedCard.title} />
-            </div>
-            <div className="modal-text-wrapper">
-              <h2>{selectedCard.title}</h2>
-              <p><strong>Location:</strong> {selectedCard.location}</p>
-              <p><strong>Price:</strong> ₹{selectedCard.price}</p>
-              <h4>Features</h4>
-              <p>{selectedCard.description || selectedCard.features}</p>
+        <div className={`modal fade ${showModal ? "show d-block" : ""}`} onClick={handleCloseModal} style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <div className="modal-dialog modal-lg modal-dialog-centered" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{selectedCard.title}</h5>
+                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+              </div>
+              <div className="modal-body">
+                <img
+                  src={selectedCard.imageUrl ? `http://localhost:8080${selectedCard.imageUrl}` : "/placeholder.jpg"}
+                  className="img-fluid mb-3"
+                  alt={selectedCard.title}
+                />
+                <p><strong>Location:</strong> {selectedCard.location}</p>
+                <p><strong>Price:</strong> ₹{selectedCard.price}</p>
+                <h6>Features</h6>
+                <p>{selectedCard.description || selectedCard.features}</p>
+              </div>
             </div>
           </div>
         </div>
