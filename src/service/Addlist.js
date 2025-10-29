@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://195.35.45.56:5858/api/files/upload";
+const API_URL = "https://api.bellaryinfotech.com/api/files/upload";
 
 
 //  inserting data into database 
@@ -27,7 +27,7 @@ export const fetchRecords=async()=>{
 
        try{
 
-                       const response=await axios.get("http://195.35.45.56:5858/api/files/all");
+                       const response=await axios.get("https://api.bellaryinfotech.com/api/files/all");
 
                        return response;
        }catch(error){
@@ -47,7 +47,7 @@ export const fetchRecords=async()=>{
 export const deleteRecordsById=async(id)=>{
 
     try{
-               const response=await axios.delete("http://195.35.45.56:5858/api/files/delete"+"/"+id)
+               const response=await axios.delete("https://api.bellaryinfotech.com/api/files/delete"+"/"+id)
 
                return response;
     }catch(error){
