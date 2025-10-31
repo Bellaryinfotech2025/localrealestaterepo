@@ -42,13 +42,13 @@ const Admin = () => {
     try {
       const response = await fetchRecords();
 
-      // ✅ handle nested response like [[{...}]]
+     
       const formattedData = Array.isArray(response.data[0])
         ? response.data[0]
         : response.data;
 
       setData(formattedData || []);
-      console.log("Fetched data:", formattedData);
+    
     } catch (error) {
       console.log("Error fetching records:", error);
     }
@@ -162,7 +162,7 @@ const Admin = () => {
 
         setProperty({
           title: "",
-          city: "Mahabubnagar",
+          city: "",
           areaSqFt: "",
           areaCents: "",
           price: "",
