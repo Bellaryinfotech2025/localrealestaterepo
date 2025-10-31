@@ -307,7 +307,7 @@ const Admin = () => {
                             src={
                               prop.imageUrl.startsWith("http")
                                 ? prop.imageUrl
-                                : `http://195.35.45.56:5858${prop.imageUrl.startsWith("/") ? "" : "/"}${prop.imageUrl}`
+                                : `https://api.bellaryinfotech.com${prop.imageUrl.startsWith("/") ? "" : "/"}${prop.imageUrl}`
                             }
                             alt={prop.title}
                             style={{ width: "80px", height: "60px", objectFit: "cover", borderRadius: "5px" }}
