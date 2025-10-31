@@ -3,7 +3,7 @@ import { fetchRecords } from "../service/Addlist";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../Lrecustomerselectiondesign.css"; // custom styles
+import "../Lrecustomerselectiondesign.css";
 
 const Lrecustomerselection = () => {
   const [activeTab, setActiveTab] = useState("All Cities");
@@ -21,7 +21,8 @@ const Lrecustomerselection = () => {
     try {
       const response = await fetchRecords();
       setData(response.data);
-      if (response.status === 200) console.log("Records fetched successfully");
+      if (response.status === 200)
+        console.log("Records fetched successfully");
     } catch (error) {
       console.log("Error fetching records:", error);
     }
@@ -54,8 +55,14 @@ const Lrecustomerselection = () => {
       filtered = filtered.filter((p) => p.location === activeTab);
     }
 
-    if (filter === "3") filtered = filtered.filter((p) => (p.area || "").toString().includes("3"));
-    if (filter === "5") filtered = filtered.filter((p) => (p.area || "").toString().includes("5"));
+    if (filter === "3")
+      filtered = filtered.filter((p) =>
+        (p.area || "").toString().includes("3")
+      );
+    if (filter === "5")
+      filtered = filtered.filter((p) =>
+        (p.area || "").toString().includes("5")
+      );
 
     return filtered;
   };
@@ -75,6 +82,26 @@ const Lrecustomerselection = () => {
     }, 300);
   };
 
+  // ✅ Fixed Image URL helper (like Admin)
+  const getFixedImageUrl = (url) => {
+    if (!url)
+      return "https://lre.bellaryinfotech.com/uploads/images/default-placeholder.png";
+
+    if (url.startsWith("http")) {
+      // If old backend IP
+      return url.replace(
+        "http://195.35.45.56:5858",
+        "https://lre.bellaryinfotech.com"
+      );
+    }
+
+    // Convert backend format to /uploads/images/
+    return `https://lre.bellaryinfotech.com${url.replace(
+      "/api/files/view/image",
+      "/uploads/images"
+    )}`;
+  };
+
   return (
     <div className="container mt-4">
       <ToastContainer position="top-right" autoClose={2500} />
@@ -85,7 +112,9 @@ const Lrecustomerselection = () => {
         {tabs.map((tab) => (
           <button
             key={tab}
-            className={`btn me-2 mb-2 ${activeTab === tab ? "btn-primary" : "btn-outline-primary"}`}
+            className={`btn me-2 mb-2 ${
+              activeTab === tab ? "btn-primary" : "btn-outline-primary"
+            }`}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
@@ -100,22 +129,28 @@ const Lrecustomerselection = () => {
         </p>
       </div>
 
-      {/* Filters centered */}
+      {/* Filters */}
       <div className="d-flex justify-content-center mb-4 flex-wrap">
         <button
-          className={`btn me-2 mb-2 ${filter === "all" ? "btn-success" : "btn-outline-success"}`}
+          className={`btn me-2 mb-2 ${
+            filter === "all" ? "btn-success" : "btn-outline-success"
+          }`}
           onClick={() => setFilter("all")}
         >
           All
         </button>
         <button
-          className={`btn me-2 mb-2 ${filter === "3" ? "btn-success" : "btn-outline-success"}`}
+          className={`btn me-2 mb-2 ${
+            filter === "3" ? "btn-success" : "btn-outline-success"
+          }`}
           onClick={() => setFilter("3")}
         >
           3 Cents
         </button>
         <button
-          className={`btn me-2 mb-2 ${filter === "5" ? "btn-success" : "btn-outline-success"}`}
+          className={`btn me-2 mb-2 ${
+            filter === "5" ? "btn-success" : "btn-outline-success"
+          }`}
           onClick={() => setFilter("5")}
         >
           5 Cents
@@ -125,20 +160,44 @@ const Lrecustomerselection = () => {
       {/* Properties */}
       <div className="row">
         {getCurrentProperties().map((property) => (
-          <div key={property.id} className="col-sm-12 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
-            <div className="card shadow-sm rounded hover-card w-100" onClick={() => handleCardClick(property)} style={{ cursor: "pointer" }}>
+          <div
+            key={property.id}
+            className="col-sm-12 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch"
+          >
+            <div
+              className="card shadow-sm rounded hover-card w-100"
+              onClick={() => handleCardClick(property)}
+              style={{ cursor: "pointer" }}
+            >
               <img
-                src={property.imageUrl ? `https://api.bellaryinfotech.com/${property.imageUrl}` : "/placeholder.jpg"}
+                src={getFixedImageUrl(property.imageUrl)}
                 className="card-img-top"
                 alt={property.title}
-                style={{ height: "200px", objectFit: "cover", borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}
+                style={{
+                  height: "200px",
+                  objectFit: "cover",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
+                }}
+                onError={(e) => {
+                  e.target.src =
+                    "https://lre.bellaryinfotech.com/uploads/images/default-placeholder.png";
+                }}
               />
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{property.title}</h5>
-                <p className="mb-1"><strong>Location:</strong> {property.location}</p>
-                <p className="mb-1"><strong>Area:</strong> {property.area} Cents</p>
-                <p className="mb-1"><strong>Price:</strong> ₹{property.price}</p>
-                <p className="card-text flex-grow-1">{property.description || property.features}</p>
+                <p className="mb-1">
+                  <strong>Location:</strong> {property.location}
+                </p>
+                <p className="mb-1">
+                  <strong>Area:</strong> {property.area} Cents
+                </p>
+                <p className="mb-1">
+                  <strong>Price:</strong> ₹{property.price}
+                </p>
+                <p className="card-text flex-grow-1">
+                  {property.description || property.features}
+                </p>
                 <a
                   href={`https://wa.me/917013438163?text=Hey I want to know more about ${property.title}`}
                   target="_blank"
@@ -156,21 +215,40 @@ const Lrecustomerselection = () => {
 
       {/* Modal */}
       {selectedCard && (
-        <div className={`modal fade ${showModal ? "show d-block" : ""}`} onClick={handleCloseModal} style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
-          <div className="modal-dialog modal-lg modal-dialog-centered" onClick={(e) => e.stopPropagation()}>
+        <div
+          className={`modal fade ${showModal ? "show d-block" : ""}`}
+          onClick={handleCloseModal}
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div
+            className="modal-dialog modal-lg modal-dialog-centered"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">{selectedCard.title}</h5>
-                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleCloseModal}
+                ></button>
               </div>
               <div className="modal-body">
                 <img
-                  src={selectedCard.imageUrl ? `https://api.bellaryinfotech.com/${selectedCard.imageUrl}` : "/placeholder.jpg"}
+                  src={getFixedImageUrl(selectedCard.imageUrl)}
                   className="img-fluid mb-3"
                   alt={selectedCard.title}
+                  onError={(e) => {
+                    e.target.src =
+                      "https://lre.bellaryinfotech.com/uploads/images/default-placeholder.png";
+                  }}
                 />
-                <p><strong>Location:</strong> {selectedCard.location}</p>
-                <p><strong>Price:</strong> ₹{selectedCard.price}</p>
+                <p>
+                  <strong>Location:</strong> {selectedCard.location}
+                </p>
+                <p>
+                  <strong>Price:</strong> ₹{selectedCard.price}
+                </p>
                 <h6>Features</h6>
                 <p>{selectedCard.description || selectedCard.features}</p>
               </div>
