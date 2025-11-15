@@ -1,61 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 import "../landingpagecomponent/landingpagedesign.css";
 
-
-import bgImage1 from "../assets/green.jpg";
-import bgImage2 from "../assets/login.jpg";
-import bgImage3 from "../assets/testomonials.jpg";
-
+// Replace these with actual Andhra Pradesh / Hyderabad real-estate plot images
+const slides = [
+  {
+    url: "https://images.pexels.com/photos/14284409/pexels-photo-14284409.jpeg",
+    headline: "Land Development Plot",
+    description: "Vacant land ready for real estate development.",
+  },
+  {
+    url: "https://images.pexels.com/photos/33516339/pexels-photo-33516339.jpeg",
+    headline: "Residential Plot for Sale",
+    description: "Plots available for residential construction.",
+  },
+  {
+    url: "https://images.pexels.com/photos/14896230/pexels-photo-14896230.jpeg",
+    headline: "Open Field Plot",
+    description: "Wide open land for versatile development.",
+  },
+];
 
 const LandingPage = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const images = [bgImage1, bgImage2, bgImage3];
-
-  // Auto-rotate hero images every 2 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+  const handleWhatsApp = () => {
+    const phone = "+917013438163";
+    const message = encodeURIComponent(
+      "Hi, I'm interested in your land plots. Could you share more details?"
+    );
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+  };
 
   return (
     <div className="lre_page_localrealstate">
-      {/* Navbar */}
-      {/* <Navbar /> */}
-
-      {/* Hero Section with Rotating Image Slider */}
-      <section
-        className="lre_tiger_localrealstate"
-        style={{ backgroundImage: `url(${images[currentImage]})` }}
-        role="banner"
-      >
-        <div className="lre_tiger_localrealstate__content">
-          <h1 className="lre_tiger_localrealstate__headline">
-            WELCOME TO LRE
-          </h1>
-          <p className="lre_tiger_localrealstate__subheadline">
-            Real estate cannot be lost or stolen, nor can it be carried away.
-            Purchased with common sense, paid for in full, and managed with
-            reasonable care, it is about the safest investment in the world.
-            Discover local properties tailored to your lifestyle with expert
-            guidance every step of the way.
-          </p>
-
-          {/* CTA Buttons (optional) */}
-          {/* 
-          <div className="lre_tiger_localrealstate__cta-group">
-            <button className="lre_tiger_localrealstate__cta-primary">
-              See Listings
-            </button>
-            <button className="lre_tiger_localrealstate__cta-secondary">
-              Contact Agent
+      <div className="lre_hero_overlay">
+        <div className="lre_hero_content">
+          <h1 id="slide-headline"></h1>
+          <p id="slide-description"></p>
+          <div className="lre_hero_buttons">
+            <button className="cta-primary">View Plots</button>
+            <button className="cta-secondary" onClick={handleWhatsApp}>
+              Contact Us
             </button>
           </div>
-          */}
         </div>
-      </section>
+      </div>
+
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        slidesPerView={1}
+        loop
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        navigation
+        onSlideChange={(swiper) => {
+          const slide = slides[swiper.realIndex];
+          document.getElementById("slide-headline").textContent = slide.headline;
+          document.getElementById("slide-description").textContent = slide.description;
+        }}
+        className="lre_hero_swiper"
+        style={{ height: "100vh" }}
+      >
+        {slides.map((slide, idx) => (
+          <SwiperSlide key={idx}>
+            <div
+              className="lre_hero_slide_bg"
+              style={{ backgroundImage: `url(${slide.url})` }}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };

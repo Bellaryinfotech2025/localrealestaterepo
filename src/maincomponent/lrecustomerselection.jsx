@@ -14,7 +14,7 @@ const Lrecustomerselection = () => {
   const [greeting, setGreeting] = useState("");
   const [data, setData] = useState([]);
 
-  const tabs = ["All Cities", "Kurnool", "Hyderabad", "Mahabubnagar"];
+  const tabs = ["All Cities", "Kurnool", "Hyderabad"];
 
   // ------------------ Fetch Records ------------------
   const fetchrecords = async () => {

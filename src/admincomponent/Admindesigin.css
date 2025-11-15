@@ -1,4 +1,144 @@
 /* ---------------- GENERAL WRAPPER ---------------- */
+
+/* Login Page */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #eef1f5;
+}
+
+.login-card {
+  width: 360px;
+  padding: 25px;
+  background: white;
+  box-shadow: 0px 4px 14px rgba(0,0,0,0.15);
+  border-radius: 8px;
+}
+
+.login-title {
+  text-align: center;
+  color: #004385;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Admin Layout */
+.admin-container {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: linear-gradient(to bottom, #0c0f14, #14161b, #1a1d24);
+  padding: 25px 15px;
+  color: white;
+  box-shadow: 3px 0 10px rgba(0,0,0,0.2);
+}
+
+.sidebar-title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.sidebar-btn {
+  width: 100%;
+  background: #1f242d;
+  border: none;
+  padding: 12px;
+  color: white;
+  text-align: left;
+  font-size: 16px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  transition: 0.2s;
+}
+
+.sidebar-btn:hover {
+  background: #2d3340;
+}
+
+.logout {
+  background: #b41616 !important;
+}
+
+.logout:hover {
+  background: #8d1212 !important;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 25px;
+  background: #f4f6f9;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header h3 {
+  font-weight: 700;
+}
+
+.card-custom {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
+.card-header-custom {
+  background: #0057b3;
+  padding: 12px 18px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-header-dark {
+  background: #1a1d24;
+  padding: 12px 18px;
+  color: white;
+  font-weight: 600;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.preview-images img {
+  width: 90px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 6px;
+  margin-top: 6px;
+}
+
+.video-preview {
+  width: 100%;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.list-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
 .admin-wrapper {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     max-width: 1200px;

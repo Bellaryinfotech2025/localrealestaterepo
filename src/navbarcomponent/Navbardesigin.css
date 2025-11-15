@@ -1,176 +1,152 @@
-/* ---------------- GENERAL NAVBAR ---------------- */
+/* =============================
+   GLOBAL NAVBAR STYLES
+============================= */
+
 .navbar {
-    width: 100%;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  background:#ffffff; /* deep navy blue, professional real estate feel */
+  border-bottom: 1px solid #145da0; /* slightly lighter blue for subtle contrast */
+  padding: 12px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow */
+  transition: background 0.3s ease;
 }
 
-/* ---------------- CONTAINER ---------------- */
+/* Container */
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 70px;
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* ---------------- LOGO ---------------- */
+/* =============================
+   LOGO SECTION
+============================= */
 .logo4 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.logo4:hover {
-    transform: scale(1.05);
-}
-
-.globe-icon4 {
-    font-size: 28px;
-    animation: spin 10s linear infinite;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .logo-text4 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0c2d57;
+  letter-spacing: 1px;
+  font-family: "Poppins", sans-serif;
 }
 
-/* ---------------- HAMBURGER ---------------- */
+/* =============================
+   HAMBURGER MENU (Mobile)
+============================= */
 .hamburger4 {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 22px;
-    cursor: pointer;
-    z-index: 1000;
+  width: 35px;
+  height: 26px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .hamburger4 span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background: #fff;
-    border-radius: 2px;
-    transition: all 0.4s ease;
+  width: 100%;
+  height: 4px;
+  background: #0c2d57;
+  border-radius: 3px;
+  transition: 0.3s;
 }
 
 .hamburger4.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+  transform: rotate(45deg) translateY(10px);
 }
 
 .hamburger4.active span:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
 
 .hamburger4.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+  transform: rotate(-45deg) translateY(-10px);
 }
 
-/* ---------------- NAV MENU ---------------- */
+/* =============================
+   NAV MENU (Desktop)
+============================= */
 .nav-menu4 {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-item4 {
-    list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
 }
 
 .nav-link4 {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  background: none;
+  border: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 10px 16px;
+  color: #0c2d57;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s;
 }
 
 .nav-link4:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+  color: #145da0;
 }
 
-/* ---------------- ANIMATIONS ---------------- */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+/* =============================
+   MOBILE MENU (Slide-in)
+============================= */
+@media (max-width: 768px) {
+  .hamburger4 {
+    display: flex;
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* ---------------- RESPONSIVE ---------------- */
-@media screen and (max-width: 992px) {
-    .hamburger4 {
-        display: flex;
-    }
-
-    .nav-menu4 {
-        position: fixed;
-        top: 70px;
-        /* below navbar */
-        right: -300px;
-        /* hidden initially */
-        width: 250px;
-        /* sidebar width */
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(15px);
-        flex-direction: column;
-        gap: 25px;
-        align-items: flex-start;
-        padding: 20px 20px;
-        border-radius: 12px 0 0 12px;
-        transition: right 0.4s ease, opacity 0.4s ease;
-        opacity: 0;
-        z-index: 998;
-    }
-
-    .nav-menu4.active {
-        right: 0;
-        /* slide in */
-        opacity: 1;
-    }
-
-    .nav-link4 {
-        font-size: 18px;
-        width: 100%;
-        text-align: left;
-    }
-}
-
-/* ---------------- OPTIONAL OVERLAY ---------------- */
-.nav-overlay {
+  .nav-menu4 {
     position: fixed;
-    top: 70px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease;
-    z-index: 997;
-}
+    top: 0;
+    right: -100%;
+    width: 60%;
+    height: 100vh;
+    background: #0c2d57;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+    transition: 0.4s ease;
+    padding-top: 50px;
+  }
 
-.nav-overlay.active {
-    opacity: 1;
-    visibility: visible;
+  .nav-menu4.active {
+    right: 0;
+  }
+
+  .nav-link4 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    padding: 12px 20px;
+  }
+
+  /* Background overlay */
+  .nav-overlay.active {
+    display: block;
+  }
+
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(239, 236, 236, 0.4);
+    z-index: 998;
+  }
 }

@@ -8,11 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Admin = () => {
   const navigate = useNavigate();
 
-  // ------------------ Persistent Login ------------------
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
 
-  // ------------------ Property States ------------------
   const [property, setProperty] = useState({
     title: "",
     city: "",
@@ -31,24 +29,18 @@ const Admin = () => {
   const imageRef = useRef(null);
   const videoRef = useRef(null);
 
-  // ------------------ Restore Login on Refresh ------------------
   useEffect(() => {
     const savedLogin = localStorage.getItem("isAdminLoggedIn");
     if (savedLogin === "true") setIsLoggedIn(true);
   }, []);
 
-  // ------------------ Fetch Properties ------------------
   const fetchrecords = async () => {
     try {
       const response = await fetchRecords();
-
-     
       const formattedData = Array.isArray(response.data[0])
         ? response.data[0]
         : response.data;
-
       setData(formattedData || []);
-    
     } catch (error) {
       console.log("Error fetching records:", error);
     }
@@ -58,7 +50,6 @@ const Admin = () => {
     fetchrecords();
   }, []);
 
-  // ------------------ Delete Property ------------------
   const deletepropertyById = async (id) => {
     try {
       const response = await deleteRecordsById(id);
@@ -67,12 +58,10 @@ const Admin = () => {
         fetchrecords();
       }
     } catch (error) {
-      console.log("Error while deleting property:", error);
       toast.error("Failed to delete property!");
     }
   };
 
-  // ------------------ Greeting ------------------
   const updateGreeting = () => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) setGreeting("Good Morning");
@@ -80,20 +69,18 @@ const Admin = () => {
     else if (hour >= 17 && hour < 21) setGreeting("Good Evening");
     else setGreeting("Good Night");
   };
+
   useEffect(() => {
     updateGreeting();
     const interval = setInterval(updateGreeting, 60000);
     return () => clearInterval(interval);
   }, []);
 
-  // ------------------ Login Handler ------------------
   const handleLogin = (e) => {
     e.preventDefault();
     const { email, password } = loginData;
-    if (
-      email.trim().toLowerCase() === "lrenoor@gmail.com" &&
-      password.trim() === "admin123"
-    ) {
+
+    if (email.trim().toLowerCase() === "lrenoor@gmail.com" && password.trim() === "admin123") {
       setIsLoggedIn(true);
       localStorage.setItem("isAdminLoggedIn", "true");
     } else {
@@ -101,25 +88,27 @@ const Admin = () => {
     }
   };
 
-  // ------------------ Logout ------------------
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isAdminLoggedIn");
     navigate("/", { replace: true });
   };
 
-  // ------------------ Property Handlers ------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     if (["areaSqFt", "areaCents", "price"].includes(name)) {
       const sanitizedValue = parseFloat(value) || 0;
+
       if (name === "areaSqFt") {
         const cents = parseFloat((sanitizedValue / 435.6).toFixed(2));
         setProperty({ ...property, areaSqFt: sanitizedValue, areaCents: cents });
       } else if (name === "areaCents") {
         const sqFt = parseFloat((sanitizedValue * 435.6).toFixed(2));
         setProperty({ ...property, areaCents: sanitizedValue, areaSqFt: sqFt });
-      } else setProperty({ ...property, [name]: sanitizedValue });
+      } else {
+        setProperty({ ...property, [name]: sanitizedValue });
+      }
     } else {
       setProperty({ ...property, [name]: value });
     }
@@ -128,6 +117,7 @@ const Admin = () => {
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (!files || files.length === 0) return;
+
     if (name === "image") {
       const fileArray = Array.from(files);
       setImages(fileArray);
@@ -141,12 +131,14 @@ const Admin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!images.length) return toast.error("Please upload at least one image.");
+    if (!images.length)
+      return toast.error("Please upload at least one image.");
 
     try {
       const formData = new FormData();
       images.forEach((img) => formData.append("imageFile", img));
       if (property.video) formData.append("videoFile", property.video);
+
       formData.append("title", property.title);
       formData.append("location", property.city);
       formData.append("area", property.areaSqFt);
@@ -176,23 +168,24 @@ const Admin = () => {
         if (videoRef.current) videoRef.current.value = "";
       }
     } catch (err) {
-      console.error("Upload failed:", err);
-      toast.error("Upload failed. Check console for details.");
+      toast.error("Upload failed.");
     }
   };
 
-  // ------------------ Login Screen ------------------
+  // ------------------- LOGIN UI --------------------
   if (!isLoggedIn) {
     return (
-      <div className="container d-flex justify-content-center align-items-center vh-100">
-        <div className="card shadow p-4" style={{ width: "350px" }}>
-          <h3 className="text-center mb-3 text-primary">Admin Login</h3>
+      <div className="login-wrapper">
+        <div className="login-card">
+          <h3 className="login-title">LRE RealEstate Admin</h3>
+
           <form onSubmit={handleLogin}>
             <div className="mb-3">
+              <label>Email</label>
               <input
                 type="email"
                 className="form-control"
-                placeholder="Email"
+                placeholder="Enter email"
                 value={loginData.email}
                 onChange={(e) =>
                   setLoginData({ ...loginData, email: e.target.value })
@@ -200,11 +193,13 @@ const Admin = () => {
                 required
               />
             </div>
+
             <div className="mb-3">
+              <label>Password</label>
               <input
                 type="password"
                 className="form-control"
-                placeholder="Password"
+                placeholder="Enter password"
                 value={loginData.password}
                 onChange={(e) =>
                   setLoginData({ ...loginData, password: e.target.value })
@@ -212,250 +207,221 @@ const Admin = () => {
                 required
               />
             </div>
+
             <button className="btn btn-primary w-100">Login</button>
           </form>
+
+          <ToastContainer />
         </div>
-        <ToastContainer />
       </div>
     );
   }
 
-  // ------------------ Admin Panel ------------------
+  // ------------------- MAIN ADMIN UI --------------------
   return (
-    <div className="container-fluid">
-      <div className="row">
-        {/* Sidebar */}
-        <div className="col-md-2 bg-dark text-white vh-100 d-flex flex-column p-3">
-          <div className="mb-4 text-center">
-            <h5 className="text-primary">Admin Panel</h5>
-          </div>
+    <div className="admin-container">
+      <div className="sidebar">
 
-          <ul className="nav nav-pills flex-column mb-auto">
-            <li className="nav-item mb-2">
-              <button
-                className="nav-link text-white d-flex align-items-center"
-                onClick={() => navigate("/")}
-              >
-                <i className="bi bi-house-fill me-2"></i> Home
-              </button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="nav-link text-white d-flex align-items-center">
-                <i className="bi bi-speedometer2 me-2"></i> Dashboard
-              </button>
-            </li>
-            <li className="nav-item mt-auto">
-              <button
-                className="nav-link text-danger d-flex align-items-center"
-                onClick={handleLogout}
-              >
-                <i className="bi bi-box-arrow-right me-2"></i> Logout
-              </button>
-            </li>
-          </ul>
+        <h4 className="sidebar-title">LRE Admin</h4>
+
+        <button className="sidebar-btn" onClick={() => navigate("/")}>
+          🏠 Home
+        </button>
+
+        <button className="sidebar-btn logout" onClick={handleLogout}>
+          🚪 Logout
+        </button>
+
+      </div>
+
+      <div className="main-content">
+        <div className="header">
+          <h3>Dashboard</h3>
+          <span>{greeting}, Admin</span>
         </div>
 
-        {/* Main Content */}
-        <div className="col-md-10 p-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h3>Dashboard</h3>
-            <span className="text-muted">{greeting}, Admin!</span>
-          </div>
+        {/* ADD PROPERTY */}
+        <div className="card-custom">
+          <div className="card-header-custom">Add New Property</div>
 
-          {/* Add Property Form */}
-          <div className="card shadow mb-4">
-            <div className="card-header bg-primary text-white">
-              Add New Property
-            </div>
-            <div className="card-body">
-              <form onSubmit={handleSubmit}>
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Title"
-                      name="title"
-                      value={property.title}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <select
-                      className="form-select"
-                      name="city"
-                      value={property.city}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option>Hyderabad</option>
-                      <option>Kurnool</option>
-                    </select>
-                  </div>
-                  <div className="col-md-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      placeholder="Area (sq.ft)"
-                      name="areaSqFt"
-                      value={property.areaSqFt}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      placeholder="Area (cents)"
-                      name="areaCents"
-                      value={property.areaCents}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <input
-                      type="number"
-                      className="form-control"
-                      placeholder="Price"
-                      name="price"
-                      value={property.price}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-md-12">
-                    <textarea
-                      className="form-control"
-                      placeholder="Features"
-                      name="features"
-                      value={property.features}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label fw-bold">
-                      Upload Images
-                    </label>
-                    <input
-                      type="file"
-                      name="image"
-                      multiple
-                      className="form-control"
-                      onChange={handleFileChange}
-                      ref={imageRef}
-                    />
-                    <div className="mt-2 d-flex flex-wrap gap-2">
-                      {imagePreviews.map((img, i) => (
-                        <img
-                          key={i}
-                          src={img}
-                          alt="preview"
-                          style={{
-                            width: "100px",
-                            height: "70px",
-                            objectFit: "cover",
-                            borderRadius: "5px",
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label fw-bold">
-                      Upload Video (Optional)
-                    </label>
-                    <input
-                      type="file"
-                      name="video"
-                      className="form-control"
-                      onChange={handleFileChange}
-                      ref={videoRef}
-                    />
-                    {videoPreview && (
-                      <video
-                        src={videoPreview}
-                        controls
-                        className="mt-2"
-                        style={{ width: "100%", borderRadius: "5px" }}
-                      />
-                    )}
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="row g-3">
+                <div className="col-md-6">
+                  <label>Title</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="title"
+                    value={property.title}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <label>City</label>
+                  <select
+                    className="form-select"
+                    name="city"
+                    value={property.city}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option>Hyderabad</option>
+                    <option>Kurnool</option>
+                  </select>
+                </div>
+
+                <div className="col-md-4">
+                  <label>Area Sq.ft</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="areaSqFt"
+                    value={property.areaSqFt}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="col-md-4">
+                  <label>Area Cents</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="areaCents"
+                    value={property.areaCents}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="col-md-4">
+                  <label>Price</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    name="price"
+                    value={property.price}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="col-md-12">
+                  <label>Features</label>
+                  <textarea
+                    className="form-control"
+                    name="features"
+                    value={property.features}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+
+                <div className="col-md-6">
+                  <label className="fw-bold">Upload Images</label>
+                  <input
+                    type="file"
+                    name="image"
+                    multiple
+                    className="form-control"
+                    onChange={handleFileChange}
+                    ref={imageRef}
+                  />
+
+                  <div className="preview-images">
+                    {imagePreviews.map((img, index) => (
+                      <img key={index} src={img} alt="preview" />
+                    ))}
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-success w-100 mt-3"
-                >
-                  Upload Property
-                </button>
-              </form>
-            </div>
-          </div>
 
-          {/* Property List */}
-          <div className="card shadow">
-            <div className="card-header bg-dark text-white">Property List</div>
-            <div className="card-body">
-              <div className="table-responsive">
-                <table className="table table-striped table-hover">
-                  <thead className="table-dark">
-                    <tr>
-                      <th>Image</th>
-                      <th>paragraph</th>
-                      <th>Title</th>
-                      <th>City</th>
-                      <th>Area</th>
-                      <th>Price</th>
-                      <th>Features</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((prop) => (
-                      <tr key={prop.id}>
-                        <td>
-         <img
-  src={
-    prop.imageUrl
-      ? `https://lre.bellaryinfotech.com${prop.imageUrl.replace(
-          "/api/files/view/image",
-          "/uploads/images"
-        )}`
-      : "https://lre.bellaryinfotech.com/uploads/images/default-placeholder.png"
-  }
-  alt={prop.name || "property"}
-  style={{
-    width: "80px",
-    height: "80px",
-    objectFit: "cover",
-    borderRadius: "8px",
-  }}
-/>
-               </td>
-                       
-                        <td>{prop.title}</td>
-                        <td>{prop.location}</td>
-                        <td>
-                          {prop.area} sq.ft / {prop.areaInCents} cents
-                        </td>
-                        <td>₹{prop.price}</td>
-                        <td>{prop.features}</td>
-                        <td>
-                          <button
-                            className="btn btn-danger btn-sm"
-                            onClick={() => deletepropertyById(prop.id)}
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <div className="col-md-6">
+                  <label className="fw-bold">Upload Video (Optional)</label>
+
+                  <input
+                    type="file"
+                    name="video"
+                    className="form-control"
+                    ref={videoRef}
+                    onChange={handleFileChange}
+                  />
+
+                  {videoPreview && (
+                    <video src={videoPreview} controls className="video-preview" />
+                  )}
+                </div>
               </div>
+
+              <button className="btn btn-success w-100 mt-4" type="submit">
+                Upload Property
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* PROPERTY LIST */}
+        <div className="card-custom mt-4">
+          <div className="card-header-dark">Property List</div>
+
+          <div className="card-body">
+            <div className="table-responsive">
+              <table className="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>City</th>
+                    <th>Area</th>
+                    <th>Price</th>
+                    <th>Features</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {data.map((prop) => (
+                    <tr key={prop.id}>
+                      <td>
+                        <img
+                          src={
+                            prop.imageUrl
+                              ? `https://lre.bellaryinfotech.com${prop.imageUrl.replace(
+                                  "/api/files/view/image",
+                                  "/uploads/images"
+                                )}`
+                              : "https://lre.bellaryinfotech.com/uploads/images/default-placeholder.png"
+                          }
+                          alt={prop.title}
+                          className="list-img"
+                        />
+                      </td>
+
+                      <td>{prop.title}</td>
+                      <td>{prop.location}</td>
+                      <td>
+                        {prop.area} sqft / {prop.areaInCents} cents
+                      </td>
+                      <td>₹{prop.price}</td>
+                      <td>{prop.features}</td>
+
+                      <td>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => deletepropertyById(prop.id)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+
+              </table>
             </div>
           </div>
         </div>
+
       </div>
+
       <ToastContainer position="top-right" autoClose={2500} />
     </div>
   );

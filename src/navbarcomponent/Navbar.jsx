@@ -62,8 +62,8 @@ const Navbar = ({ footerRef }) => {
                     onClick={handleHomeClick}
                     style={{ cursor: "pointer" }}
                 >
-                    <div className="globe-icon4 spinning-globe4">🌍</div>
-                    <span className="logo-text4">LRE</span>
+                    {/* <div className="globe-icon4 spinning-globe4">🌍</div> */}
+                    <span className="logo-text4">LreRealEstate</span>
                 </div>
 
                 {/* ☰ Hamburger */}
