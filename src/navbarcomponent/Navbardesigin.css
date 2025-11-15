@@ -1,11 +1,10 @@
 /* =============================
    GLOBAL NAVBAR STYLES
 ============================= */
-
 .navbar {
   width: 100%;
-  background:#ffffff; /* deep navy blue, professional real estate feel */
-  border-bottom: 1px solid #145da0; /* slightly lighter blue for subtle contrast */
+  background: #ffffff; /* solid for desktop */
+  border-bottom: 1px solid #145da0;
   padding: 12px 20px;
   position: fixed;
   top: 0;
@@ -13,7 +12,7 @@
   z-index: 999;
   display: flex;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* subtle shadow */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: background 0.3s ease;
 }
 
@@ -26,9 +25,7 @@
   justify-content: space-between;
 }
 
-/* =============================
-   LOGO SECTION
-============================= */
+/* LOGO */
 .logo4 {
   display: flex;
   align-items: center;
@@ -43,12 +40,10 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* =============================
-   HAMBURGER MENU (Mobile)
-============================= */
+/* HAMBURGER MENU (Mobile) */
 .hamburger4 {
-  width: 35px;
-  height: 26px;
+  width: 30px;
+  height: 22px;
   display: none;
   flex-direction: column;
   justify-content: space-between;
@@ -57,14 +52,14 @@
 
 .hamburger4 span {
   width: 100%;
-  height: 4px;
+  height: 3px;
   background: #0c2d57;
   border-radius: 3px;
   transition: 0.3s;
 }
 
 .hamburger4.active span:nth-child(1) {
-  transform: rotate(45deg) translateY(10px);
+  transform: rotate(45deg) translateY(8px);
 }
 
 .hamburger4.active span:nth-child(2) {
@@ -72,12 +67,10 @@
 }
 
 .hamburger4.active span:nth-child(3) {
-  transform: rotate(-45deg) translateY(-10px);
+  transform: rotate(-45deg) translateY(-8px);
 }
 
-/* =============================
-   NAV MENU (Desktop)
-============================= */
+/* NAV MENU (Desktop) */
 .nav-menu4 {
   display: flex;
   gap: 25px;
@@ -100,9 +93,7 @@
   color: #145da0;
 }
 
-/* =============================
-   MOBILE MENU (Slide-in)
-============================= */
+/* MOBILE MENU (Slide-in with Transparent BG) */
 @media (max-width: 768px) {
   .hamburger4 {
     display: flex;
@@ -114,14 +105,14 @@
     right: -100%;
     width: 60%;
     height: 100vh;
-    background: #0c2d57;
+    background: rgba(12, 45, 87, 0.9); /* semi-transparent navy blue */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 20px;
+    justify-content: flex-start; /* items start from top */
+    gap: 25px;
     text-align: center;
     transition: 0.4s ease;
-    padding-top: 50px;
+    padding-top: 80px; /* space from top for logo */
   }
 
   .nav-menu4.active {
@@ -134,7 +125,7 @@
     padding: 12px 20px;
   }
 
-  /* Background overlay */
+  /* Optional overlay behind menu */
   .nav-overlay.active {
     display: block;
   }
@@ -146,7 +137,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-    background: rgba(239, 236, 236, 0.4);
+    background: rgba(0,0,0,0.3); /* transparent dark overlay */
     z-index: 998;
   }
 }
