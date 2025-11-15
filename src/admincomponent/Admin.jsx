@@ -13,7 +13,7 @@ const Admin = () => {
 
   const [property, setProperty] = useState({
     title: "",
-    city: "",
+    city: "hyderabad",
     areaSqFt: "",
     areaCents: "",
     price: "",
